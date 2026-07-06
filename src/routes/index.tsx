@@ -984,8 +984,8 @@ function ContactCTA() {
 
           <dl className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm max-w-md">
             <ContactRow icon={Mail} label="Email" value="info@rktopcraft.com" />
-            <ContactRow icon={MapPin} label="Coverage" value="Marbella · Estepona · Mijas · Benalmádena" />
-            <ContactRow icon={Languages} label="Languages" value="English · Spanish · German" />
+            <ContactRow icon={MapPin} label="Coverage" value="Sotogrande · Marbella · Estepona · Mijas · Benalmádena" />
+            <ContactRow icon={Languages} label="Languages" value="English · Spanish · German · Russian" />
             <ContactRow icon={ShieldCheck} label="Licence" value="B75276881" />
           </dl>
         </div>
