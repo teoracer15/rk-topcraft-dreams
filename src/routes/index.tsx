@@ -355,7 +355,7 @@ function HeroStat({ n, label, small }: { n: string; label: string; small?: boole
 /* ---------- Marquee strip ---------- */
 
 function Marquee() {
-  const items = ["Marbella", "Estepona", "Mijas", "Benalmádena", "Licensed & Insured", "20+ Years Experience", "English · Spanish · German"];
+  const items = ["Sotogrande", "Marbella", "Estepona", "Mijas", "Benalmádena", "Licensed & Insured", "20+ Years Experience", "English · Spanish · German · Russian"];
   const doubled = [...items, ...items, ...items, ...items];
   return (
     <div className="border-y border-border/60 bg-sand overflow-hidden">
