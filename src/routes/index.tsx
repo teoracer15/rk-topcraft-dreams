@@ -1038,10 +1038,11 @@ function ContactCTA() {
                 placeholder="Location, timeline, plot info…"
               />
             </div>
-            <button type="submit" className="w-full inline-flex items-center justify-center gap-2 bg-clay px-6 py-4 text-xs uppercase tracking-[0.24em] text-ivory hover:bg-teal transition">
-              {sent ? "Opened in WhatsApp — thanks!" : "Send via WhatsApp"} <ArrowUpRight className="h-4 w-4" />
+            <button type="submit" disabled={status === "saving"} className="w-full inline-flex items-center justify-center gap-2 bg-clay px-6 py-4 text-xs uppercase tracking-[0.24em] text-ivory hover:bg-teal transition disabled:opacity-60">
+              {status === "saving" ? "Sending…" : status === "sent" ? "Sent — thanks!" : "Send enquiry"} <ArrowUpRight className="h-4 w-4" />
             </button>
-            <p className="text-[0.65rem] text-muted-foreground text-center">Your message opens WhatsApp with your details pre-filled.</p>
+            {errorMsg && <p className="text-[0.7rem] text-red-600 text-center">{errorMsg}</p>}
+            <p className="text-[0.65rem] text-muted-foreground text-center">We store your enquiry securely and also open WhatsApp with your details.</p>
           </div>
         </form>
       </div>
