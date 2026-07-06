@@ -802,23 +802,8 @@ function AreasMap() {
           {/* soft ivory vignette so the map sits inside the editorial palette */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ivory/10 via-transparent to-ivory/20 mix-blend-multiply" />
 
-          {/* Pinned municipalities — floating labels layered above the map */}
-          <div className="pointer-events-none absolute inset-0 hidden md:block">
-            {areas.map((a) => (
-              <div
-                key={a.id}
-                className="absolute -translate-x-1/2 -translate-y-full"
-                style={{ left: `${a.x}%`, top: `${a.y}%` }}
-              >
-                <div className="flex flex-col items-center">
-                  <span className="h-2.5 w-2.5 rounded-full bg-clay ring-4 ring-ivory/80 shadow" />
-                  <span className="mt-1 bg-ivory/90 backdrop-blur px-2 py-0.5 text-[0.6rem] uppercase tracking-[0.22em] text-ink shadow-sm">
-                    {a.name}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
+
+
         </div>
 
         {/* Legend / municipality strip — visible on all viewports */}
