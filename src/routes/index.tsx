@@ -788,50 +788,57 @@ function AreasMap() {
           </p>
         </div>
 
-        <div className="relative mt-14 aspect-[16/8] w-full border border-border bg-sand overflow-hidden reveal">
-          {/* Stylised coastline SVG */}
-          <svg viewBox="0 0 100 50" className="absolute inset-0 h-full w-full" preserveAspectRatio="none" aria-hidden>
-            {/* Sea */}
-            <defs>
-              <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#0E4D45" stopOpacity="0.08" />
-                <stop offset="100%" stopColor="#0E4D45" stopOpacity="0.25" />
-              </linearGradient>
-              <pattern id="dots" x="0" y="0" width="2" height="2" patternUnits="userSpaceOnUse">
-                <circle cx="0.5" cy="0.5" r="0.15" fill="#0E4D45" opacity="0.25" />
-              </pattern>
-            </defs>
-            {/* Land */}
-            <path d="M0,0 L100,0 L100,42 C 85,38 72,44 60,40 C 48,36 34,44 22,40 C 12,36 5,42 0,38 Z" fill="#EFE8DB" />
-            <path d="M0,38 C 5,42 12,36 22,40 C 34,44 48,36 60,40 C 72,44 85,38 100,42 L100,50 L0,50 Z" fill="url(#sea)" />
-            {/* Coast line */}
-            <path d="M0,38 C 5,42 12,36 22,40 C 34,44 48,36 60,40 C 72,44 85,38 100,42" fill="none" stroke="#0E4D45" strokeWidth="0.3" opacity="0.5" />
-            {/* Grid texture on land */}
-            <rect x="0" y="0" width="100" height="42" fill="url(#dots)" />
-          </svg>
+        <div className="relative mt-14 aspect-[16/9] w-full border border-border bg-sand overflow-hidden reveal">
+          {/* Google Maps — full Costa del Sol, from Estepona in the west to Nerja in the east */}
+          <iframe
+            title="Costa del Sol coverage map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d206066.02!2d-4.9!3d36.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sCosta%20del%20Sol%20Estepona%20Marbella%20Mijas%20Benalmadena%20Fuengirola%20Malaga!5e0!3m2!1sen!2ses!4v1700000000000"
+            className="absolute inset-0 h-full w-full grayscale-[0.15] contrast-[0.95]"
+            style={{ border: 0, filter: "sepia(0.15) hue-rotate(-10deg) saturate(0.85)" }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+          {/* soft ivory vignette so the map sits inside the editorial palette */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ivory/10 via-transparent to-ivory/20 mix-blend-multiply" />
 
+          {/* Pinned municipalities — floating labels layered above the map */}
+          <div className="pointer-events-none absolute inset-0 hidden md:block">
+            {areas.map((a) => (
+              <div
+                key={a.id}
+                className="absolute -translate-x-1/2 -translate-y-full"
+                style={{ left: `${a.x}%`, top: `${a.y}%` }}
+              >
+                <div className="flex flex-col items-center">
+                  <span className="h-2.5 w-2.5 rounded-full bg-clay ring-4 ring-ivory/80 shadow" />
+                  <span className="mt-1 bg-ivory/90 backdrop-blur px-2 py-0.5 text-[0.6rem] uppercase tracking-[0.22em] text-ink shadow-sm">
+                    {a.name}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Legend / municipality strip — visible on all viewports */}
+        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5 reveal">
           {areas.map((a) => (
-            <button
+            <div
               key={a.id}
               onMouseEnter={() => setHover(a.id)}
               onMouseLeave={() => setHover(null)}
-              onFocus={() => setHover(a.id)}
-              onBlur={() => setHover(null)}
-              className="absolute -translate-x-1/2 -translate-y-full group"
-              style={{ left: `${a.x}%`, top: `${a.y}%` }}
-              aria-label={a.name}
+              className={`border p-4 transition-colors ${hover === a.id ? "border-clay bg-sand" : "border-border bg-card"}`}
             >
-              <span className="relative flex flex-col items-center">
-                <span className={`h-3 w-3 rounded-full bg-clay ring-4 ring-clay/25 transition-all ${hover === a.id ? "scale-125 ring-clay/40" : ""}`} />
-                <span className={`mt-2 text-[0.65rem] uppercase tracking-[0.24em] transition ${hover === a.id ? "text-clay" : "text-ink/70"}`}>{a.name}</span>
-                <span className={`absolute bottom-full mb-3 w-52 -translate-y-1 bg-teal text-ivory p-3 text-left transition-all duration-300 pointer-events-none ${hover === a.id ? "opacity-100 translate-y-0" : "opacity-0"}`}>
-                  <span className="block font-serif text-base">{a.name}</span>
-                  <span className="block mt-1 text-[0.7rem] text-ivory/80 leading-relaxed">{a.note}</span>
-                </span>
-              </span>
-            </button>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-clay" />
+                <span className="font-serif text-lg">{a.name}</span>
+              </div>
+              <p className="mt-1 text-[0.72rem] leading-relaxed text-muted-foreground">{a.note}</p>
+            </div>
           ))}
         </div>
+
       </div>
     </section>
   );
