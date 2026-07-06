@@ -263,6 +263,7 @@ function LangSwitcher({ lang, setLang, solid }: { lang: Lang; setLang: (l: Lang)
     { id: "en", label: "EN", flag: "🇬🇧" },
     { id: "es", label: "ES", flag: "🇪🇸" },
     { id: "de", label: "DE", flag: "🇩🇪" },
+    { id: "ru", label: "RU", flag: "🇷🇺" },
   ];
   return (
     <div className={`hidden md:flex items-center gap-1 text-[0.65rem] tracking-[0.2em] ${solid ? "text-ink/70" : "text-ivory/80"}`}>
