@@ -347,14 +347,14 @@ function Projects() {
           </a>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[220px]">
+        <div className="mt-16 columns-1 gap-4 sm:columns-2 lg:columns-3 [column-fill:_balance]">
           {projects.map((p) => (
-            <figure key={p.title + p.img} className={`group relative overflow-hidden bg-muted ${p.span}`}>
+            <figure key={p.title + p.img} className="group relative mb-4 block break-inside-avoid overflow-hidden bg-muted">
               <img
                 src={p.img}
                 alt={`${p.title} — ${p.loc}`}
                 loading="lazy"
-                className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+                className="block w-full h-auto object-cover transition duration-700 group-hover:scale-[1.04]"
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent p-5 opacity-0 transition group-hover:opacity-100">
                 <p className="text-[0.65rem] uppercase tracking-[0.24em] text-gold-soft">{p.tag} · {p.loc}</p>
