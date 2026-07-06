@@ -328,8 +328,8 @@ function Hero({ lang }: { lang: Lang }) {
 
         <div className="mt-16 grid grid-cols-2 gap-8 border-t border-ivory/20 pt-8 text-ivory/90 md:mt-24 md:grid-cols-4 reveal">
           <HeroStat n="20+" label="Years of experience" />
-          <HeroStat n="4" label="Municipalities served" />
-          <HeroStat n="3" label="Languages spoken" />
+          <HeroStat n="5" label="Municipalities served" />
+          <HeroStat n="4" label="Languages spoken" />
           <HeroStat n="B75276881" label="Licence number" small />
         </div>
       </div>
