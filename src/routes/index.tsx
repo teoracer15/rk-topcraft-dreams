@@ -19,6 +19,7 @@ import v51 from "@/assets/gr/villa-51.jpg.asset.json";
 import v88 from "@/assets/gr/villa-88.jpg.asset.json";
 import ronda1 from "@/assets/ronda/ronda-1.jpg.asset.json";
 import ronda2 from "@/assets/ronda/ronda-2.jpg.asset.json";
+import beforeReno from "@/assets/renovation/before-renovation.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -747,7 +748,7 @@ function BeforeAfter() {
           onMouseDown={(e) => { dragging.current = true; move(e.clientX); }}
           onTouchStart={(e) => { dragging.current = true; if (e.touches[0]) move(e.touches[0].clientX); }}
         >
-          <img src={v27.url} alt="Before renovation" className="absolute inset-0 h-full w-full object-cover" draggable={false} />
+          <img src={beforeReno.url} alt="Before renovation" className="absolute inset-0 h-full w-full object-cover" draggable={false} loading="lazy" decoding="async" />
           <img src={v50.url} alt="After renovation" className="absolute inset-0 h-full w-full object-cover" draggable={false} style={{ clipPath: `inset(0 0 0 ${pos}%)` }} />
           {/* Divider */}
           <div className="absolute inset-y-0 w-px bg-ivory pointer-events-none" style={{ left: `${pos}%` }} />
@@ -787,50 +788,42 @@ function AreasMap() {
           </p>
         </div>
 
-        <div className="relative mt-14 aspect-[16/8] w-full border border-border bg-sand overflow-hidden reveal">
-          {/* Stylised coastline SVG */}
-          <svg viewBox="0 0 100 50" className="absolute inset-0 h-full w-full" preserveAspectRatio="none" aria-hidden>
-            {/* Sea */}
-            <defs>
-              <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#0E4D45" stopOpacity="0.08" />
-                <stop offset="100%" stopColor="#0E4D45" stopOpacity="0.25" />
-              </linearGradient>
-              <pattern id="dots" x="0" y="0" width="2" height="2" patternUnits="userSpaceOnUse">
-                <circle cx="0.5" cy="0.5" r="0.15" fill="#0E4D45" opacity="0.25" />
-              </pattern>
-            </defs>
-            {/* Land */}
-            <path d="M0,0 L100,0 L100,42 C 85,38 72,44 60,40 C 48,36 34,44 22,40 C 12,36 5,42 0,38 Z" fill="#EFE8DB" />
-            <path d="M0,38 C 5,42 12,36 22,40 C 34,44 48,36 60,40 C 72,44 85,38 100,42 L100,50 L0,50 Z" fill="url(#sea)" />
-            {/* Coast line */}
-            <path d="M0,38 C 5,42 12,36 22,40 C 34,44 48,36 60,40 C 72,44 85,38 100,42" fill="none" stroke="#0E4D45" strokeWidth="0.3" opacity="0.5" />
-            {/* Grid texture on land */}
-            <rect x="0" y="0" width="100" height="42" fill="url(#dots)" />
-          </svg>
+        <div className="relative mt-14 aspect-[16/9] w-full border border-border bg-sand overflow-hidden reveal">
+          {/* Google Maps — full Costa del Sol, from Estepona in the west to Nerja in the east */}
+          <iframe
+            title="Costa del Sol coverage map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d206066.02!2d-4.9!3d36.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sCosta%20del%20Sol%20Estepona%20Marbella%20Mijas%20Benalmadena%20Fuengirola%20Malaga!5e0!3m2!1sen!2ses!4v1700000000000"
+            className="absolute inset-0 h-full w-full grayscale-[0.15] contrast-[0.95]"
+            style={{ border: 0, filter: "sepia(0.15) hue-rotate(-10deg) saturate(0.85)" }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+          {/* soft ivory vignette so the map sits inside the editorial palette */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ivory/10 via-transparent to-ivory/20 mix-blend-multiply" />
 
+
+
+        </div>
+
+        {/* Legend / municipality strip — visible on all viewports */}
+        <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5 reveal">
           {areas.map((a) => (
-            <button
+            <div
               key={a.id}
               onMouseEnter={() => setHover(a.id)}
               onMouseLeave={() => setHover(null)}
-              onFocus={() => setHover(a.id)}
-              onBlur={() => setHover(null)}
-              className="absolute -translate-x-1/2 -translate-y-full group"
-              style={{ left: `${a.x}%`, top: `${a.y}%` }}
-              aria-label={a.name}
+              className={`border p-4 transition-colors ${hover === a.id ? "border-clay bg-sand" : "border-border bg-card"}`}
             >
-              <span className="relative flex flex-col items-center">
-                <span className={`h-3 w-3 rounded-full bg-clay ring-4 ring-clay/25 transition-all ${hover === a.id ? "scale-125 ring-clay/40" : ""}`} />
-                <span className={`mt-2 text-[0.65rem] uppercase tracking-[0.24em] transition ${hover === a.id ? "text-clay" : "text-ink/70"}`}>{a.name}</span>
-                <span className={`absolute bottom-full mb-3 w-52 -translate-y-1 bg-teal text-ivory p-3 text-left transition-all duration-300 pointer-events-none ${hover === a.id ? "opacity-100 translate-y-0" : "opacity-0"}`}>
-                  <span className="block font-serif text-base">{a.name}</span>
-                  <span className="block mt-1 text-[0.7rem] text-ivory/80 leading-relaxed">{a.note}</span>
-                </span>
-              </span>
-            </button>
+              <div className="flex items-center gap-2">
+                <span className="h-2 w-2 rounded-full bg-clay" />
+                <span className="font-serif text-lg">{a.name}</span>
+              </div>
+              <p className="mt-1 text-[0.72rem] leading-relaxed text-muted-foreground">{a.note}</p>
+            </div>
           ))}
         </div>
+
       </div>
     </section>
   );
@@ -1133,6 +1126,7 @@ function RondaTeaser() {
   const [reveal, setReveal] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const [mouse, setMouse] = useState({ x: 50, y: 50 });
+  const [swap, setSwap] = useState(false);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -1149,6 +1143,12 @@ function RondaTeaser() {
     setMouse({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
   };
 
+  // Front/back pair — click cycles them while the layered design stays identical
+  const back = swap ? ronda1 : ronda2;
+  const front = swap ? ronda2 : ronda1;
+  const backLabel = swap ? "Study II · Terrace" : "Study I · Facade";
+  const frontLabel = swap ? "Study I · Facade" : "Study II · Terrace";
+
   return (
     <section
       id="ronda"
@@ -1161,12 +1161,16 @@ function RondaTeaser() {
         <img
           src={ronda1.url}
           alt=""
+          loading="lazy"
+          decoding="async"
           className={`absolute inset-0 h-full w-full object-cover transition-all duration-[2000ms] ${reveal ? "opacity-40 scale-105" : "opacity-0 scale-110"}`}
           style={{ filter: "blur(28px) saturate(0.9)" }}
         />
         <img
           src={ronda2.url}
           alt=""
+          loading="lazy"
+          decoding="async"
           className={`absolute inset-0 h-full w-full object-cover mix-blend-overlay transition-all duration-[2500ms] delay-200 ${reveal ? "opacity-55 scale-105" : "opacity-0 scale-110"}`}
           style={{ filter: "blur(40px) saturate(1.2)" }}
         />
@@ -1180,6 +1184,7 @@ function RondaTeaser() {
           }}
         />
       </div>
+
 
       <div className="relative mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-40">
         <div className="grid gap-14 md:grid-cols-[1fr_1.1fr] md:gap-20 items-center">
@@ -1224,24 +1229,56 @@ function RondaTeaser() {
             </div>
           </div>
 
-          {/* RIGHT — layered painting stack */}
-          <div className="relative aspect-[4/5] w-full">
-            <div className={`absolute inset-0 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
+          {/* RIGHT — layered painting stack (click to reveal the other study) */}
+          <button
+            type="button"
+            onClick={() => setSwap((s) => !s)}
+            aria-label="Reveal the other concept study"
+            className="group relative aspect-[4/5] w-full cursor-pointer text-left"
+          >
+            {/* Back card */}
+            <div className={`absolute inset-0 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
                  style={{ transform: reveal ? `translate(-4%, 6%) rotate(-3deg) translate(${(mouse.x - 50) * -0.05}%, ${(mouse.y - 50) * -0.05}%)` : undefined }}>
               <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
-                <img src={ronda2.url} alt="Ronda concept painting — sunset facade" className="h-full w-full object-cover" />
+                <img
+                  key={`back-${swap}`}
+                  src={back.url}
+                  alt="Ronda concept painting"
+                  width={800}
+                  height={1000}
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width: 768px) 40vw, 90vw"
+                  className="h-full w-full object-cover animate-in fade-in duration-700"
+                />
                 <div className="absolute inset-0 ring-1 ring-ivory/20" />
-                <span className="absolute bottom-3 left-3 bg-teal-deep/70 backdrop-blur px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory/80">Study I · Facade</span>
+                <span className="absolute bottom-3 left-3 bg-teal-deep/70 backdrop-blur px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory/80">{backLabel}</span>
               </div>
             </div>
-            <div className={`absolute inset-0 transition-all duration-[1400ms] delay-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
+            {/* Front card */}
+            <div className={`absolute inset-0 transition-all duration-[900ms] delay-100 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
                  style={{ transform: reveal ? `translate(4%, -4%) rotate(2.5deg) translate(${(mouse.x - 50) * 0.06}%, ${(mouse.y - 50) * 0.06}%)` : undefined }}>
-              <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
-                <img src={ronda1.url} alt="Ronda concept painting — pool and bougainvillea" className="h-full w-full object-cover" />
+              <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] transition-transform duration-500 group-hover:scale-[1.015]">
+                <img
+                  key={`front-${swap}`}
+                  src={front.url}
+                  alt="Ronda concept painting"
+                  width={800}
+                  height={1000}
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width: 768px) 40vw, 90vw"
+                  className="h-full w-full object-cover animate-in fade-in duration-700"
+                />
                 <div className="absolute inset-0 ring-1 ring-ivory/20" />
-                <span className="absolute bottom-3 left-3 bg-clay/85 px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory">Study II · Terrace</span>
+                <span className="absolute bottom-3 left-3 bg-clay/85 px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory">{frontLabel}</span>
               </div>
             </div>
+
+            {/* Tap hint */}
+            <span className={`pointer-events-none absolute bottom-2 right-2 z-10 border border-ivory/25 bg-teal-deep/60 backdrop-blur px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.3em] text-ivory/80 transition-opacity duration-700 delay-[1200ms] ${reveal ? "opacity-100" : "opacity-0"} group-hover:bg-clay group-hover:text-ivory group-hover:border-clay`}>
+              Tap to reveal
+            </span>
 
             {/* Wax seal */}
             <div className={`absolute -top-4 -right-4 h-20 w-20 rounded-full border border-clay-soft/50 flex items-center justify-center rotate-[8deg] backdrop-blur-sm bg-teal-deep/40 transition-all duration-1000 delay-[1100ms] ${reveal ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}>
@@ -1250,7 +1287,8 @@ function RondaTeaser() {
                 <div className="text-[0.5rem] tracking-[0.28em] text-ivory/70 uppercase">Private</div>
               </div>
             </div>
-          </div>
+          </button>
+
         </div>
       </div>
 
