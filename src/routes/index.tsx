@@ -19,6 +19,7 @@ import v51 from "@/assets/gr/villa-51.jpg.asset.json";
 import v88 from "@/assets/gr/villa-88.jpg.asset.json";
 import ronda1 from "@/assets/ronda/ronda-1.jpg.asset.json";
 import ronda2 from "@/assets/ronda/ronda-2.jpg.asset.json";
+import beforeReno from "@/assets/renovation/before-renovation.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Home,
