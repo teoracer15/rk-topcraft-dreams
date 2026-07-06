@@ -748,7 +748,7 @@ function BeforeAfter() {
           onMouseDown={(e) => { dragging.current = true; move(e.clientX); }}
           onTouchStart={(e) => { dragging.current = true; if (e.touches[0]) move(e.touches[0].clientX); }}
         >
-          <img src={v27.url} alt="Before renovation" className="absolute inset-0 h-full w-full object-cover" draggable={false} />
+          <img src={beforeReno.url} alt="Before renovation" className="absolute inset-0 h-full w-full object-cover" draggable={false} loading="lazy" decoding="async" />
           <img src={v50.url} alt="After renovation" className="absolute inset-0 h-full w-full object-cover" draggable={false} style={{ clipPath: `inset(0 0 0 ${pos}%)` }} />
           {/* Divider */}
           <div className="absolute inset-y-0 w-px bg-ivory pointer-events-none" style={{ left: `${pos}%` }} />
