@@ -790,18 +790,19 @@ function AreasMap() {
         </div>
 
         <div className="relative mt-14 aspect-[16/9] w-full border border-border bg-sand overflow-hidden reveal">
-          {/* Google Maps — full Costa del Sol, from Estepona in the west to Nerja in the east */}
-          <iframe
-            title="Costa del Sol coverage map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d206066.02!2d-4.9!3d36.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sCosta%20del%20Sol%20Estepona%20Marbella%20Mijas%20Benalmadena%20Fuengirola%20Malaga!5e0!3m2!1sen!2ses!4v1700000000000"
-            className="absolute inset-0 h-full w-full grayscale-[0.15] contrast-[0.95]"
-            style={{ border: 0, filter: "sepia(0.15) hue-rotate(-10deg) saturate(0.85)" }}
+          {/* Illustrated Costa del Sol map — full coastline from Estepona to Málaga */}
+          <img
+            src={costaMap.url}
+            alt="Illustrated map of the Costa del Sol showing Estepona, Marbella, Mijas, Fuengirola, Benalmádena, Torremolinos and Málaga"
+            width={1792}
+            height={1024}
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
           />
           {/* soft ivory vignette so the map sits inside the editorial palette */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ivory/10 via-transparent to-ivory/20 mix-blend-multiply" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ivory/10 via-transparent to-ivory/25 mix-blend-multiply" />
+
 
 
 
