@@ -17,6 +17,8 @@ import v50 from "@/assets/gr/villa-50.jpg.asset.json";
 import v65 from "@/assets/gr/villa-65.jpg.asset.json";
 import v51 from "@/assets/gr/villa-51.jpg.asset.json";
 import v88 from "@/assets/gr/villa-88.jpg.asset.json";
+import ronda1 from "@/assets/ronda/ronda-1.jpg.asset.json";
+import ronda2 from "@/assets/ronda/ronda-2.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -30,6 +32,7 @@ const NAV = [
   { id: "services", label: "Services" },
   { id: "process", label: "Process" },
   { id: "projects", label: "Projects" },
+  { id: "ronda", label: "Ronda" },
   { id: "areas", label: "Areas" },
   { id: "voices", label: "Voices" },
   { id: "faq", label: "FAQ" },
@@ -81,6 +84,7 @@ function Home() {
         <WhyStats />
         <Process />
         <Projects />
+        <RondaTeaser />
         <BeforeAfter />
         <AreasMap />
         <Testimonials />
@@ -1120,5 +1124,156 @@ function FloatingWhatsApp() {
     >
       <MessageCircle className="h-6 w-6" />
     </a>
+  );
+}
+
+/* ---------- Ronda — mysterious upcoming project teaser ---------- */
+
+function RondaTeaser() {
+  const [reveal, setReveal] = useState(false);
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [mouse, setMouse] = useState({ x: 50, y: 50 });
+
+  useEffect(() => {
+    if (!ref.current) return;
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) { setReveal(true); io.disconnect(); } },
+      { threshold: 0.25 },
+    );
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+
+  const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    setMouse({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
+  };
+
+  return (
+    <section
+      id="ronda"
+      ref={ref}
+      onMouseMove={onMove}
+      className="relative overflow-hidden bg-teal-deep grain text-ivory scroll-mt-24"
+    >
+      {/* Painterly backdrop — the two concept paintings, blurred, tinted */}
+      <div className="absolute inset-0">
+        <img
+          src={ronda1.url}
+          alt=""
+          className={`absolute inset-0 h-full w-full object-cover transition-all duration-[2000ms] ${reveal ? "opacity-40 scale-105" : "opacity-0 scale-110"}`}
+          style={{ filter: "blur(28px) saturate(0.9)" }}
+        />
+        <img
+          src={ronda2.url}
+          alt=""
+          className={`absolute inset-0 h-full w-full object-cover mix-blend-overlay transition-all duration-[2500ms] delay-200 ${reveal ? "opacity-55 scale-105" : "opacity-0 scale-110"}`}
+          style={{ filter: "blur(40px) saturate(1.2)" }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-teal-deep/85 via-teal-deep/70 to-teal-deep/95" />
+        {/* Cursor-follow spotlight */}
+        <div
+          className="pointer-events-none absolute inset-0 transition-opacity duration-700"
+          style={{
+            background: `radial-gradient(400px circle at ${mouse.x}% ${mouse.y}%, rgba(225,147,111,0.18), transparent 60%)`,
+            opacity: reveal ? 1 : 0,
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-40">
+        <div className="grid gap-14 md:grid-cols-[1fr_1.1fr] md:gap-20 items-center">
+          {/* LEFT — copy */}
+          <div>
+            <div className={`flex items-center gap-3 transition-all duration-1000 ${reveal ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-4"}`}>
+              <span className="h-px w-10 bg-clay" />
+              <span className="text-[0.65rem] uppercase tracking-[0.4em] text-clay-soft">Classified · In Concept</span>
+            </div>
+
+            <h2 className={`mt-8 font-serif text-6xl leading-[1.02] md:text-8xl text-ivory transition-all duration-1000 delay-100 ${reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
+              Something<br />
+              <em className="text-clay-soft">unseen,</em><br />
+              near <span className="relative inline-block">
+                Ronda.
+                <span className={`absolute -bottom-2 left-0 h-px bg-clay transition-all duration-[1400ms] delay-700 ${reveal ? "w-full" : "w-0"}`} />
+              </span>
+            </h2>
+
+            <p className={`mt-10 max-w-lg text-base leading-relaxed text-ivory/80 md:text-lg transition-all duration-1000 delay-300 ${reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+              A private residence hidden above the gorge. Bougainvillea against dusk stone, water that catches the last of the sierra light, glass that dissolves into cliff.
+            </p>
+            <p className={`mt-6 max-w-lg text-base leading-relaxed text-ivory/70 transition-all duration-1000 delay-500 ${reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+              Something the Costa del Sol has <em className="text-clay-soft not-italic font-medium">not yet seen.</em> Renderings are held in-studio; these paintings are the only glimpse released.
+            </p>
+
+            <dl className={`mt-12 grid grid-cols-3 gap-6 border-t border-ivory/15 pt-8 max-w-md transition-all duration-1000 delay-700 ${reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+              <RondaMeta k="Location" v="Serranía de Ronda" />
+              <RondaMeta k="Phase" v="Concept" />
+              <RondaMeta k="Reveal" v="2026" />
+            </dl>
+
+            <div className={`mt-12 transition-all duration-1000 delay-[900ms] ${reveal ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}>
+              <a
+                href={`${WA_LINK.split("?")[0]}?text=${encodeURIComponent("Hello RK Topcraft, I'd like to be on the private list for the Ronda project.")}`}
+                target="_blank" rel="noreferrer"
+                className="group inline-flex items-center gap-3 border border-clay-soft/60 px-7 py-4 text-xs uppercase tracking-[0.28em] text-clay-soft hover:bg-clay hover:border-clay hover:text-ivory transition"
+              >
+                Request private preview
+                <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+          </div>
+
+          {/* RIGHT — layered painting stack */}
+          <div className="relative aspect-[4/5] w-full">
+            <div className={`absolute inset-0 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
+                 style={{ transform: reveal ? `translate(-4%, 6%) rotate(-3deg) translate(${(mouse.x - 50) * -0.05}%, ${(mouse.y - 50) * -0.05}%)` : undefined }}>
+              <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
+                <img src={ronda2.url} alt="Ronda concept painting — sunset facade" className="h-full w-full object-cover" />
+                <div className="absolute inset-0 ring-1 ring-ivory/20" />
+                <span className="absolute bottom-3 left-3 bg-teal-deep/70 backdrop-blur px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory/80">Study I · Facade</span>
+              </div>
+            </div>
+            <div className={`absolute inset-0 transition-all duration-[1400ms] delay-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
+                 style={{ transform: reveal ? `translate(4%, -4%) rotate(2.5deg) translate(${(mouse.x - 50) * 0.06}%, ${(mouse.y - 50) * 0.06}%)` : undefined }}>
+              <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
+                <img src={ronda1.url} alt="Ronda concept painting — pool and bougainvillea" className="h-full w-full object-cover" />
+                <div className="absolute inset-0 ring-1 ring-ivory/20" />
+                <span className="absolute bottom-3 left-3 bg-clay/85 px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory">Study II · Terrace</span>
+              </div>
+            </div>
+
+            {/* Wax seal */}
+            <div className={`absolute -top-4 -right-4 h-20 w-20 rounded-full border border-clay-soft/50 flex items-center justify-center rotate-[8deg] backdrop-blur-sm bg-teal-deep/40 transition-all duration-1000 delay-[1100ms] ${reveal ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}>
+              <div className="text-center leading-tight">
+                <div className="font-serif italic text-clay-soft text-lg">RK</div>
+                <div className="text-[0.5rem] tracking-[0.28em] text-ivory/70 uppercase">Private</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* bottom hairline marquee */}
+      <div className="relative border-t border-ivory/10 py-3 overflow-hidden">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <span key={i} className="mx-6 inline-flex items-center gap-6 text-[0.6rem] uppercase tracking-[0.4em] text-ivory/40">
+              Ronda 2026 · By invitation
+              <span className="h-1 w-1 rounded-full bg-clay/60" />
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function RondaMeta({ k, v }: { k: string; v: string }) {
+  return (
+    <div>
+      <dt className="text-[0.58rem] uppercase tracking-[0.28em] text-ivory/50">{k}</dt>
+      <dd className="mt-2 font-serif text-lg text-ivory">{v}</dd>
+    </div>
   );
 }
