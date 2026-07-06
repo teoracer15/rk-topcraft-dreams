@@ -43,13 +43,13 @@ const NAV = [
 
 /* ---------- Copy dictionary (translation-ready structure) ---------- */
 
-type Lang = "en" | "es" | "de";
+type Lang = "en" | "es" | "de" | "ru";
 const COPY = {
   en: {
     heroEyebrow: "Construction · Renovation · Costa del Sol",
     heroTitle1: "Build With",
     heroTitle2: "Confidence.",
-    heroSub: "Refined construction, renovation and project execution for international homeowners across Marbella, Estepona, Mijas and Benalmádena.",
+    heroSub: "Refined construction, renovation and project execution for international homeowners across Sotogrande, Marbella, Estepona, Mijas and Benalmádena.",
     ctaVisit: "Request a free site visit",
     ctaWork: "View our work",
   },
@@ -57,7 +57,7 @@ const COPY = {
     heroEyebrow: "Construcción · Reformas · Costa del Sol",
     heroTitle1: "Construya con",
     heroTitle2: "Confianza.",
-    heroSub: "Construcción, reformas y ejecución de proyectos de alta gama para propietarios internacionales en Marbella, Estepona, Mijas y Benalmádena.",
+    heroSub: "Construcción, reformas y ejecución de proyectos de alta gama para propietarios internacionales en Sotogrande, Marbella, Estepona, Mijas y Benalmádena.",
     ctaVisit: "Solicite una visita gratuita",
     ctaWork: "Ver nuestros proyectos",
   },
@@ -65,9 +65,17 @@ const COPY = {
     heroEyebrow: "Bau · Renovierung · Costa del Sol",
     heroTitle1: "Bauen mit",
     heroTitle2: "Vertrauen.",
-    heroSub: "Erlesene Bau- und Renovierungsarbeiten sowie Projektsteuerung für internationale Eigentümer in Marbella, Estepona, Mijas und Benalmádena.",
+    heroSub: "Erlesene Bau- und Renovierungsarbeiten sowie Projektsteuerung für internationale Eigentümer in Sotogrande, Marbella, Estepona, Mijas und Benalmádena.",
     ctaVisit: "Kostenlosen Besichtigungstermin anfragen",
     ctaWork: "Referenzen ansehen",
+  },
+  ru: {
+    heroEyebrow: "Строительство · Реновация · Коста-дель-Соль",
+    heroTitle1: "Стройте с",
+    heroTitle2: "Уверенностью.",
+    heroSub: "Строительство, реновация и ведение проектов премиум-класса для международных владельцев в Сотогранде, Марбелье, Эстепоне, Михасе и Бенальмадене.",
+    ctaVisit: "Заказать бесплатный выезд",
+    ctaWork: "Наши работы",
   },
 } as const;
 
