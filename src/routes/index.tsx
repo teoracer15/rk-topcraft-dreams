@@ -892,7 +892,7 @@ function Testimonials() {
 /* ---------- FAQ ---------- */
 
 const faqs = [
-  { q: "Where does RK Topcraft operate on the Costa del Sol?", a: "Across the whole Costa del Sol, with concentration in Marbella, Estepona, Mijas and Benalmádena. We adapt to the conditions of each plot and municipality." },
+  { q: "Where does RK Topcraft operate on the Costa del Sol?", a: "Across the whole Costa del Sol, with concentration in Sotogrande, Marbella, Estepona, Mijas and Benalmádena. We adapt to the conditions of each plot and municipality." },
   { q: "What types of homes do you build?", a: "Bespoke single-family villas and residential reforms, always from a properly defined technical project — including complex works, structural interventions and full finishing packages." },
   { q: "Do you handle licences and permits?", a: "Yes. We coordinate the preparation of documentation and the administrative follow-up needed to obtain licences, working with the responsible technicians." },
   { q: "Do you work with overseas clients remotely?", a: "Regularly. We provide English, Spanish and German communication, weekly written progress reports and video walkthroughs so you can follow the build from abroad." },
