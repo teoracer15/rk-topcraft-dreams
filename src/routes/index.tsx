@@ -1126,6 +1126,7 @@ function RondaTeaser() {
   const [reveal, setReveal] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
   const [mouse, setMouse] = useState({ x: 50, y: 50 });
+  const [swap, setSwap] = useState(false);
 
   useEffect(() => {
     if (!ref.current) return;
@@ -1142,6 +1143,12 @@ function RondaTeaser() {
     setMouse({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
   };
 
+  // Front/back pair — click cycles them while the layered design stays identical
+  const back = swap ? ronda1 : ronda2;
+  const front = swap ? ronda2 : ronda1;
+  const backLabel = swap ? "Study II · Terrace" : "Study I · Facade";
+  const frontLabel = swap ? "Study I · Facade" : "Study II · Terrace";
+
   return (
     <section
       id="ronda"
@@ -1154,12 +1161,16 @@ function RondaTeaser() {
         <img
           src={ronda1.url}
           alt=""
+          loading="lazy"
+          decoding="async"
           className={`absolute inset-0 h-full w-full object-cover transition-all duration-[2000ms] ${reveal ? "opacity-40 scale-105" : "opacity-0 scale-110"}`}
           style={{ filter: "blur(28px) saturate(0.9)" }}
         />
         <img
           src={ronda2.url}
           alt=""
+          loading="lazy"
+          decoding="async"
           className={`absolute inset-0 h-full w-full object-cover mix-blend-overlay transition-all duration-[2500ms] delay-200 ${reveal ? "opacity-55 scale-105" : "opacity-0 scale-110"}`}
           style={{ filter: "blur(40px) saturate(1.2)" }}
         />
@@ -1173,6 +1184,7 @@ function RondaTeaser() {
           }}
         />
       </div>
+
 
       <div className="relative mx-auto max-w-7xl px-6 py-32 md:px-10 md:py-40">
         <div className="grid gap-14 md:grid-cols-[1fr_1.1fr] md:gap-20 items-center">
