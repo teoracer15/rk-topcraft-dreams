@@ -5,9 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * RK Topcraft — refined Mediterranean design system.
- * Warm cream backgrounds, deep teal ink, aged-gold accent.
- * Fritz Quadrata-style serif display + clean sans body.
+ * RK Topcraft — Costa del Sol editorial system.
+ * Ivory paper, deep Mediterranean teal, burnt-clay terracotta, olive.
  */
 
 @theme inline {
@@ -34,48 +33,60 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-gold: var(--gold);
-  --color-gold-soft: var(--gold-soft);
+  --color-clay: var(--clay);
+  --color-clay-soft: var(--clay-soft);
+  --color-olive: var(--olive);
+  --color-teal: var(--teal);
+  --color-teal-deep: var(--teal-deep);
   --color-ink: var(--ink);
-  --color-cream: var(--cream);
-  --font-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --color-ivory: var(--ivory);
+  --color-sand: var(--sand);
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   --radius: 0.25rem;
-  /* Cream / bone paper */
-  --background: oklch(0.977 0.008 85);
-  --cream: oklch(0.977 0.008 85);
-  /* Deep teal ink from leaflet */
-  --foreground: oklch(0.28 0.045 220);
-  --ink: oklch(0.28 0.045 220);
 
-  --card: oklch(0.985 0.006 85);
+  /* Warm sun-bleached ivory */
+  --background: #F7F3EC;
+  --ivory: #F7F3EC;
+  --sand: #EFE8DB;
+
+  /* Deep Mediterranean teal-green */
+  --foreground: #0E4D45;
+  --ink: #0E4D45;
+  --teal: #0E4D45;
+  --teal-deep: #0A3A34;
+
+  --card: #FBF8F2;
   --card-foreground: var(--ink);
-  --popover: oklch(1 0 0);
+  --popover: #FFFFFF;
   --popover-foreground: var(--ink);
 
-  --primary: oklch(0.28 0.045 220);
-  --primary-foreground: oklch(0.977 0.008 85);
+  --primary: #0E4D45;
+  --primary-foreground: #F7F3EC;
 
-  --secondary: oklch(0.94 0.015 80);
+  --secondary: #EFE8DB;
   --secondary-foreground: var(--ink);
 
-  --muted: oklch(0.94 0.012 80);
-  --muted-foreground: oklch(0.45 0.02 220);
+  --muted: #EDE6D7;
+  --muted-foreground: #6B6E5A;
 
-  --accent: oklch(0.72 0.09 70); /* aged gold */
-  --accent-foreground: var(--ink);
-  --gold: oklch(0.68 0.10 68);
-  --gold-soft: oklch(0.86 0.045 78);
+  /* Terracotta / burnt clay accent */
+  --accent: #C4674A;
+  --accent-foreground: #F7F3EC;
+  --clay: #C4674A;
+  --clay-soft: #E1936F;
 
-  --destructive: oklch(0.55 0.20 27);
-  --destructive-foreground: oklch(0.98 0 0);
+  --olive: #8A8B6C;
 
-  --border: oklch(0.86 0.02 75);
-  --input: oklch(0.86 0.02 75);
-  --ring: oklch(0.68 0.10 68);
+  --destructive: #9A2E1F;
+  --destructive-foreground: #F7F3EC;
+
+  --border: #D9CFBB;
+  --input: #D9CFBB;
+  --ring: #C4674A;
 }
 
 @layer base {
@@ -85,14 +96,21 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv01";
+    font-feature-settings: "ss01", "cv11";
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   h1, h2, h3, h4 {
     font-family: var(--font-serif);
-    font-weight: 500;
-    letter-spacing: -0.01em;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    font-variation-settings: "SOFT" 30, "opsz" 60;
   }
+  em {
+    font-style: italic;
+    font-variation-settings: "SOFT" 100, "opsz" 60;
+  }
+  ::selection { background: var(--color-clay); color: var(--color-ivory); }
 }
 
 @utility font-serif { font-family: var(--font-serif); }
@@ -100,14 +118,83 @@
 
 @utility eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   font-weight: 500;
-  color: var(--color-gold);
+  color: var(--color-clay);
 }
 
 @utility hairline {
   height: 1px;
-  background: linear-gradient(to right, transparent, var(--color-gold) 20%, var(--color-gold) 80%, transparent);
+  background: linear-gradient(to right, transparent, var(--color-clay) 20%, var(--color-clay) 80%, transparent);
+}
+
+/* Subtle paper grain overlay for dark sections */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      radial-gradient(rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 3px 3px, 5px 5px;
+    background-position: 0 0, 1px 1px;
+    opacity: 0.6;
+    mix-blend-mode: overlay;
+  }
+}
+
+/* Ken Burns slow zoom */
+@keyframes kenburns {
+  0%   { transform: scale(1.05) translate3d(0,0,0); }
+  100% { transform: scale(1.18) translate3d(-1%, -1%, 0); }
+}
+@utility animate-kenburns {
+  animation: kenburns 22s ease-out infinite alternate;
+}
+
+/* Palm shadow drift */
+@keyframes palmdrift {
+  0%   { transform: translate3d(-5%, -3%, 0) rotate(-2deg); opacity: 0.25; }
+  50%  { transform: translate3d(3%, 2%, 0) rotate(1deg); opacity: 0.35; }
+  100% { transform: translate3d(-5%, -3%, 0) rotate(-2deg); opacity: 0.25; }
+}
+@utility animate-palm {
+  animation: palmdrift 14s ease-in-out infinite;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@utility animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Reveal on scroll (used with IntersectionObserver adding .is-visible) */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms cubic-bezier(0.22,1,0.36,1), transform 700ms cubic-bezier(0.22,1,0.36,1);
+  &.is-visible { opacity: 1; transform: translateY(0); }
+}
+
+/* Pulse for floating WhatsApp */
+@keyframes softpulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196,103,74,0.55); }
+  50%      { box-shadow: 0 0 0 18px rgba(196,103,74,0); }
+}
+@utility animate-softpulse {
+  animation: softpulse 2.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns, .animate-palm, .animate-marquee, .animate-softpulse {
+    animation: none !important;
+  }
+  .reveal { opacity: 1; transform: none; transition: none; }
 }
