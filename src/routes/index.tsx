@@ -43,13 +43,13 @@ const NAV = [
 
 /* ---------- Copy dictionary (translation-ready structure) ---------- */
 
-type Lang = "en" | "es" | "de";
+type Lang = "en" | "es" | "de" | "ru";
 const COPY = {
   en: {
     heroEyebrow: "Construction · Renovation · Costa del Sol",
     heroTitle1: "Build With",
     heroTitle2: "Confidence.",
-    heroSub: "Refined construction, renovation and project execution for international homeowners across Marbella, Estepona, Mijas and Benalmádena.",
+    heroSub: "Refined construction, renovation and project execution for international homeowners across Sotogrande, Marbella, Estepona, Mijas and Benalmádena.",
     ctaVisit: "Request a free site visit",
     ctaWork: "View our work",
   },
@@ -57,7 +57,7 @@ const COPY = {
     heroEyebrow: "Construcción · Reformas · Costa del Sol",
     heroTitle1: "Construya con",
     heroTitle2: "Confianza.",
-    heroSub: "Construcción, reformas y ejecución de proyectos de alta gama para propietarios internacionales en Marbella, Estepona, Mijas y Benalmádena.",
+    heroSub: "Construcción, reformas y ejecución de proyectos de alta gama para propietarios internacionales en Sotogrande, Marbella, Estepona, Mijas y Benalmádena.",
     ctaVisit: "Solicite una visita gratuita",
     ctaWork: "Ver nuestros proyectos",
   },
@@ -65,9 +65,17 @@ const COPY = {
     heroEyebrow: "Bau · Renovierung · Costa del Sol",
     heroTitle1: "Bauen mit",
     heroTitle2: "Vertrauen.",
-    heroSub: "Erlesene Bau- und Renovierungsarbeiten sowie Projektsteuerung für internationale Eigentümer in Marbella, Estepona, Mijas und Benalmádena.",
+    heroSub: "Erlesene Bau- und Renovierungsarbeiten sowie Projektsteuerung für internationale Eigentümer in Sotogrande, Marbella, Estepona, Mijas und Benalmádena.",
     ctaVisit: "Kostenlosen Besichtigungstermin anfragen",
     ctaWork: "Referenzen ansehen",
+  },
+  ru: {
+    heroEyebrow: "Строительство · Реновация · Коста-дель-Соль",
+    heroTitle1: "Стройте с",
+    heroTitle2: "Уверенностью.",
+    heroSub: "Строительство, реновация и ведение проектов премиум-класса для международных владельцев в Сотогранде, Марбелье, Эстепоне, Михасе и Бенальмадене.",
+    ctaVisit: "Заказать бесплатный выезд",
+    ctaWork: "Наши работы",
   },
 } as const;
 
@@ -255,6 +263,7 @@ function LangSwitcher({ lang, setLang, solid }: { lang: Lang; setLang: (l: Lang)
     { id: "en", label: "EN", flag: "🇬🇧" },
     { id: "es", label: "ES", flag: "🇪🇸" },
     { id: "de", label: "DE", flag: "🇩🇪" },
+    { id: "ru", label: "RU", flag: "🇷🇺" },
   ];
   return (
     <div className={`hidden md:flex items-center gap-1 text-[0.65rem] tracking-[0.2em] ${solid ? "text-ink/70" : "text-ivory/80"}`}>
@@ -319,8 +328,8 @@ function Hero({ lang }: { lang: Lang }) {
 
         <div className="mt-16 grid grid-cols-2 gap-8 border-t border-ivory/20 pt-8 text-ivory/90 md:mt-24 md:grid-cols-4 reveal">
           <HeroStat n="20+" label="Years of experience" />
-          <HeroStat n="4" label="Municipalities served" />
-          <HeroStat n="3" label="Languages spoken" />
+          <HeroStat n="5" label="Municipalities served" />
+          <HeroStat n="4" label="Languages spoken" />
           <HeroStat n="B75276881" label="Licence number" small />
         </div>
       </div>
@@ -346,7 +355,7 @@ function HeroStat({ n, label, small }: { n: string; label: string; small?: boole
 /* ---------- Marquee strip ---------- */
 
 function Marquee() {
-  const items = ["Marbella", "Estepona", "Mijas", "Benalmádena", "Licensed & Insured", "20+ Years Experience", "English · Spanish · German"];
+  const items = ["Sotogrande", "Marbella", "Estepona", "Mijas", "Benalmádena", "Licensed & Insured", "20+ Years Experience", "English · Spanish · German · Russian"];
   const doubled = [...items, ...items, ...items, ...items];
   return (
     <div className="border-y border-border/60 bg-sand overflow-hidden">
@@ -468,8 +477,8 @@ function useCounter(target: number, active: boolean, duration = 1600) {
 const pillars = [
   { icon: Award, num: 20, suffix: "+", label: "Years on the coast", note: "Residential and complex works delivered end-to-end." },
   { icon: ShieldCheck, num: 100, suffix: "%", label: "Licensed & insured", note: "Full project responsibility. Licence No. B75276881." },
-  { icon: MapPin, num: 4, suffix: "", label: "Costa del Sol areas", note: "Marbella · Estepona · Mijas · Benalmádena." },
-  { icon: Languages, num: 3, suffix: "", label: "Languages spoken", note: "English · Spanish · German — full-cycle support." },
+  { icon: MapPin, num: 5, suffix: "", label: "Costa del Sol areas", note: "Sotogrande · Marbella · Estepona · Mijas · Benalmádena." },
+  { icon: Languages, num: 4, suffix: "", label: "Languages spoken", note: "English · Spanish · German · Russian — full-cycle support." },
 ];
 
 function WhyStats() {
@@ -768,7 +777,8 @@ function BeforeAfter() {
 /* ---------- Areas Map ---------- */
 
 const areas = [
-  { id: "estepona", name: "Estepona", x: 18, y: 60, note: "Beachfront villas & new builds." },
+  { id: "sotogrande", name: "Sotogrande", x: 6, y: 68, note: "Gated coastal estates & polo-country residences." },
+  { id: "estepona", name: "Estepona", x: 20, y: 60, note: "Beachfront villas & new builds." },
   { id: "marbella", name: "Marbella", x: 40, y: 55, note: "Luxury residences & reforms." },
   { id: "mijas", name: "Mijas", x: 60, y: 50, note: "Hillside villas & interiors." },
   { id: "benalmadena", name: "Benalmádena", x: 78, y: 52, note: "Detached homes & pools." },
@@ -882,7 +892,7 @@ function Testimonials() {
 /* ---------- FAQ ---------- */
 
 const faqs = [
-  { q: "Where does RK Topcraft operate on the Costa del Sol?", a: "Across the whole Costa del Sol, with concentration in Marbella, Estepona, Mijas and Benalmádena. We adapt to the conditions of each plot and municipality." },
+  { q: "Where does RK Topcraft operate on the Costa del Sol?", a: "Across the whole Costa del Sol, with concentration in Sotogrande, Marbella, Estepona, Mijas and Benalmádena. We adapt to the conditions of each plot and municipality." },
   { q: "What types of homes do you build?", a: "Bespoke single-family villas and residential reforms, always from a properly defined technical project — including complex works, structural interventions and full finishing packages." },
   { q: "Do you handle licences and permits?", a: "Yes. We coordinate the preparation of documentation and the administrative follow-up needed to obtain licences, working with the responsible technicians." },
   { q: "Do you work with overseas clients remotely?", a: "Regularly. We provide English, Spanish and German communication, weekly written progress reports and video walkthroughs so you can follow the build from abroad." },
@@ -974,8 +984,8 @@ function ContactCTA() {
 
           <dl className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm max-w-md">
             <ContactRow icon={Mail} label="Email" value="info@rktopcraft.com" />
-            <ContactRow icon={MapPin} label="Coverage" value="Marbella · Estepona · Mijas · Benalmádena" />
-            <ContactRow icon={Languages} label="Languages" value="English · Spanish · German" />
+            <ContactRow icon={MapPin} label="Coverage" value="Sotogrande · Marbella · Estepona · Mijas · Benalmádena" />
+            <ContactRow icon={Languages} label="Languages" value="English · Spanish · German · Russian" />
             <ContactRow icon={ShieldCheck} label="Licence" value="B75276881" />
           </dl>
         </div>
@@ -1071,7 +1081,7 @@ function Footer() {
         <div>
           <p className="text-[0.65rem] uppercase tracking-[0.28em] text-clay-soft">Areas</p>
           <ul className="mt-4 space-y-2 text-sm text-ivory/80">
-            <li>Marbella</li><li>Estepona</li><li>Mijas</li><li>Benalmádena</li>
+            <li>Sotogrande</li><li>Marbella</li><li>Estepona</li><li>Mijas</li><li>Benalmádena</li>
           </ul>
         </div>
 
