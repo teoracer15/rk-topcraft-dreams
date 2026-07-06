@@ -1,11 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight, Building2, Hammer, Waves, ClipboardCheck, ShieldCheck, MapPin, Languages, Award, Phone, Mail, MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  ArrowUpRight, Building2, Hammer, Waves, ClipboardCheck,
+  ShieldCheck, MapPin, Languages, Award, Phone, Mail, MessageCircle,
+  Menu, X, Plus, Minus,
+} from "lucide-react";
 
-import heroVilla from "@/assets/hero-villa.jpg";
-import projectVilla from "@/assets/project-villa.jpg";
-import projectRenovation from "@/assets/project-renovation.jpg";
-import projectPool from "@/assets/project-pool.jpg";
-import aboutTerrace from "@/assets/about-terrace.jpg";
+import heroVilla from "@/assets/gr/villa-hero.jpg.asset.json";
+import v66 from "@/assets/gr/villa-66.jpg.asset.json";
+import v133 from "@/assets/gr/villa-133.jpg.asset.json";
+import v59 from "@/assets/gr/villa-59.jpg.asset.json";
+import v1 from "@/assets/gr/villa-1.jpg.asset.json";
+import v2 from "@/assets/gr/villa-2.jpg.asset.json";
+import v27 from "@/assets/gr/villa-27.jpg.asset.json";
+import v50 from "@/assets/gr/villa-50.jpg.asset.json";
+import v65 from "@/assets/gr/villa-65.jpg.asset.json";
+import v51 from "@/assets/gr/villa-51.jpg.asset.json";
+import v88 from "@/assets/gr/villa-88.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -13,6 +24,16 @@ export const Route = createFileRoute("/")({
 
 const PHONE = "699 757 950";
 const WA_LINK = "https://wa.me/34699757950";
+
+const NAV = [
+  { id: "top", label: "Home" },
+  { id: "services", label: "Services" },
+  { id: "projects", label: "Projects" },
+  { id: "process", label: "Process" },
+  { id: "why", label: "Approach" },
+  { id: "faq", label: "FAQ" },
+  { id: "contact", label: "Contact" },
+];
 
 function Home() {
   return (
@@ -23,7 +44,9 @@ function Home() {
         <IntroStrip />
         <Services />
         <Projects />
+        <Process />
         <WhyUs />
+        <FAQ />
         <ContactCTA />
       </main>
       <Footer />
@@ -31,39 +54,160 @@ function Home() {
   );
 }
 
+/* ------------------------------ HEADER ------------------------------ */
+
+function useScrollSpy() {
+  const [active, setActive] = useState<string>("top");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) setActive(visible[0].target.id);
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] },
+    );
+    NAV.forEach((n) => {
+      const el = document.getElementById(n.id);
+      if (el) io.observe(el);
+    });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      io.disconnect();
+    };
+  }, []);
+
+  return { active, scrolled };
+}
+
 function Header() {
+  const { active, scrolled } = useScrollSpy();
+  const [open, setOpen] = useState(false);
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    setOpen(false);
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", `#${id}`);
+  };
+
+  const solid = scrolled || open;
+
   return (
-    <header className="absolute inset-x-0 top-0 z-30">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 md:px-10">
-        <a href="#top" className="flex flex-col leading-none text-primary-foreground">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        solid
+          ? "bg-background/95 backdrop-blur border-b border-border shadow-[0_1px_20px_rgba(0,0,0,0.04)]"
+          : "bg-transparent"
+      }`}
+    >
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 md:px-10 md:py-5">
+        <a
+          href="#top"
+          onClick={(e) => handleClick(e, "top")}
+          className={`flex flex-col leading-none transition-colors ${solid ? "text-ink" : "text-primary-foreground"}`}
+        >
           <span className="font-serif text-2xl tracking-tight">RK</span>
-          <span className="text-[0.6rem] tracking-[0.32em] uppercase font-sans mt-0.5 opacity-90">Topcraft</span>
+          <span className="text-[0.6rem] tracking-[0.32em] uppercase mt-0.5 opacity-90">Topcraft</span>
         </a>
-        <nav className="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.24em] text-primary-foreground/90">
-          <a href="#services" className="hover:text-gold transition">Services</a>
-          <a href="#projects" className="hover:text-gold transition">Projects</a>
-          <a href="#why" className="hover:text-gold transition">Approach</a>
-          <a href="#contact" className="hover:text-gold transition">Contact</a>
+
+        <nav className="hidden lg:flex items-center gap-9 text-[0.7rem] uppercase tracking-[0.24em]">
+          {NAV.filter((n) => n.id !== "top").map((n) => {
+            const isActive = active === n.id;
+            const base = solid ? "text-ink/70 hover:text-ink" : "text-primary-foreground/85 hover:text-primary-foreground";
+            const activeCls = solid ? "text-ink" : "text-gold-soft";
+            return (
+              <a
+                key={n.id}
+                href={`#${n.id}`}
+                onClick={(e) => handleClick(e, n.id)}
+                className={`relative py-2 transition ${isActive ? activeCls : base}`}
+              >
+                {n.label}
+                <span
+                  className={`absolute left-0 -bottom-0.5 h-px bg-gold transition-all duration-300 ${
+                    isActive ? "w-full" : "w-0"
+                  }`}
+                />
+              </a>
+            );
+          })}
         </nav>
-        <a href={WA_LINK} className="hidden md:inline-flex items-center gap-2 border border-primary-foreground/40 px-4 py-2 text-[0.7rem] uppercase tracking-[0.2em] text-primary-foreground hover:bg-primary-foreground hover:text-ink transition">
-          {PHONE}
-        </a>
+
+        <div className="flex items-center gap-3">
+          <a
+            href={WA_LINK}
+            className={`hidden md:inline-flex items-center gap-2 border px-4 py-2 text-[0.7rem] uppercase tracking-[0.2em] transition ${
+              solid
+                ? "border-ink/30 text-ink hover:bg-ink hover:text-primary-foreground"
+                : "border-primary-foreground/40 text-primary-foreground hover:bg-primary-foreground hover:text-ink"
+            }`}
+          >
+            {PHONE}
+          </a>
+          <button
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((o) => !o)}
+            className={`lg:hidden inline-flex h-10 w-10 items-center justify-center transition-colors ${
+              solid ? "text-ink" : "text-primary-foreground"
+            }`}
+          >
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile drawer */}
+      <div
+        className={`lg:hidden overflow-hidden bg-background border-t border-border transition-[max-height,opacity] duration-300 ${
+          open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <nav className="flex flex-col divide-y divide-border px-6 py-2">
+          {NAV.filter((n) => n.id !== "top").map((n) => (
+            <a
+              key={n.id}
+              href={`#${n.id}`}
+              onClick={(e) => handleClick(e, n.id)}
+              className={`flex items-center justify-between py-4 text-sm uppercase tracking-[0.22em] transition ${
+                active === n.id ? "text-gold" : "text-ink"
+              }`}
+            >
+              {n.label}
+              <ArrowUpRight className="h-4 w-4 opacity-40" />
+            </a>
+          ))}
+          <a
+            href={WA_LINK}
+            className="mt-4 mb-4 inline-flex items-center justify-center gap-2 bg-gold px-5 py-3 text-xs uppercase tracking-[0.22em] text-ink"
+          >
+            <MessageCircle className="h-4 w-4" /> WhatsApp {PHONE}
+          </a>
+        </nav>
       </div>
     </header>
   );
 }
 
+/* ------------------------------ HERO ------------------------------ */
+
 function Hero() {
   return (
-    <section id="top" className="relative min-h-[100svh] w-full overflow-hidden bg-ink">
+    <section id="top" className="relative min-h-[100svh] w-full overflow-hidden bg-ink scroll-mt-0">
       <img
-        src={heroVilla}
-        alt="Luxury villa built by RK Topcraft on the Costa del Sol"
-        width={1920}
-        height={1280}
+        src={heroVilla.url}
+        alt="Luxury villa build in Marbella by RK Topcraft"
         className="absolute inset-0 h-full w-full object-cover opacity-80"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/30 to-ink/80" />
+      <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/35 to-ink/85" />
 
       <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-end px-6 pb-24 pt-40 md:px-10 md:pb-32">
         <div className="max-w-3xl text-primary-foreground">
@@ -76,11 +220,11 @@ function Hero() {
             RK Topcraft delivers refined construction, renovation and project execution for international homeowners across Marbella, Estepona, Mijas and Benalmádena.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a href="#contact" className="group inline-flex items-center gap-3 bg-gold px-7 py-4 text-xs font-medium uppercase tracking-[0.24em] text-ink hover:bg-primary-foreground transition">
+            <a href="#contact" onClick={(e) => smoothTo(e, "contact")} className="group inline-flex items-center gap-3 bg-gold px-7 py-4 text-xs font-medium uppercase tracking-[0.24em] text-ink hover:bg-primary-foreground transition">
               Request a site visit
               <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-            <a href="#projects" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-primary-foreground border-b border-primary-foreground/50 pb-1 hover:border-gold hover:text-gold-soft transition">
+            <a href="#projects" onClick={(e) => smoothTo(e, "projects")} className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-primary-foreground border-b border-primary-foreground/50 pb-1 hover:border-gold hover:text-gold-soft transition">
               View our work
             </a>
           </div>
@@ -97,6 +241,13 @@ function Hero() {
   );
 }
 
+function smoothTo(e: React.MouseEvent<HTMLAnchorElement>, id: string) {
+  e.preventDefault();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  history.replaceState(null, "", `#${id}`);
+}
+
 function Stat({ n, label, small }: { n: string; label: string; small?: boolean }) {
   return (
     <div>
@@ -105,6 +256,8 @@ function Stat({ n, label, small }: { n: string; label: string; small?: boolean }
     </div>
   );
 }
+
+/* ------------------------------ INTRO ------------------------------ */
 
 function IntroStrip() {
   return (
@@ -122,16 +275,18 @@ function IntroStrip() {
   );
 }
 
+/* ------------------------------ SERVICES ------------------------------ */
+
 const services = [
-  { icon: Building2, title: "Luxury Villa Construction", desc: "Tailored residential builds delivered with clear planning, transparent costing and controlled on-site execution." },
+  { icon: Building2, title: "Bespoke Villa Construction", desc: "Turn-key residential builds delivered from technical project through to handover, with rigorous phase control." },
   { icon: Hammer, title: "Renovations & Upgrades", desc: "Elegant reforms for villas, apartments, terraces and rental-ready properties across the coast." },
   { icon: Waves, title: "Pools & Outdoor Living", desc: "Pools, terraces and pergolas designed for refined Mediterranean living and everyday use." },
-  { icon: ClipboardCheck, title: "Project Management", desc: "Direct coordination, budget control and reliable communication from first drawing to final handover." },
+  { icon: ClipboardCheck, title: "Licences & Project Management", desc: "End-to-end coordination of technical projects, permits and administrative processes with local authorities." },
 ];
 
 function Services() {
   return (
-    <section id="services" className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
+    <section id="services" className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32 scroll-mt-24">
       <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
         <div>
           <p className="eyebrow">Core Services</p>
@@ -161,15 +316,24 @@ function Services() {
   );
 }
 
+/* ------------------------------ PROJECTS ------------------------------ */
+
 const projects = [
-  { img: projectVilla, tag: "New Build", title: "Contemporary Villa", loc: "Marbella", w: 1200, h: 1400 },
-  { img: projectRenovation, tag: "Renovation", title: "Master Bath Reform", loc: "Estepona", w: 1200, h: 1400 },
-  { img: projectPool, tag: "Outdoor Living", title: "Infinity Pool & Terrace", loc: "Benalmádena", w: 1200, h: 1400 },
+  { img: v66.url, tag: "New Build", title: "Contemporary Villa", loc: "Marbella", span: "md:col-span-2 md:row-span-2 aspect-[4/3]" },
+  { img: v133.url, tag: "Renovation", title: "Vertical Reform", loc: "Marbella", span: "aspect-[3/4]" },
+  { img: v59.url, tag: "Outdoor Living", title: "Terrace & Pool", loc: "Estepona", span: "aspect-[3/4]" },
+  { img: v1.url, tag: "New Build", title: "Villa in Marbella", loc: "Marbella", span: "md:col-span-2 aspect-[16/10]" },
+  { img: v50.url, tag: "Renovation", title: "Interior Reform", loc: "Mijas", span: "aspect-[4/5]" },
+  { img: v27.url, tag: "New Build", title: "Structural Works", loc: "Marbella", span: "aspect-[4/5]" },
+  { img: v51.url, tag: "New Build", title: "Villa 51", loc: "Marbella", span: "aspect-[4/5]" },
+  { img: v65.url, tag: "New Build", title: "Detached Villa", loc: "Benalmádena", span: "aspect-[4/5]" },
+  { img: v2.url, tag: "Outdoor Living", title: "Facade & Pool", loc: "Estepona", span: "md:col-span-2 aspect-[16/9]" },
+  { img: v88.url, tag: "New Build", title: "Villa Delivery", loc: "Marbella", span: "aspect-[4/5]" },
 ];
 
 function Projects() {
   return (
-    <section id="projects" className="border-y border-border bg-secondary/30 py-24 md:py-32">
+    <section id="projects" className="border-y border-border bg-secondary/30 py-24 md:py-32 scroll-mt-24">
       <div className="mx-auto max-w-7xl px-6 md:px-10">
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
@@ -178,31 +342,24 @@ function Projects() {
               Homes across the <em>Costa del Sol.</em>
             </h2>
           </div>
-          <a href="#contact" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-ink border-b border-ink pb-1 hover:text-gold hover:border-gold transition self-start">
+          <a href="#contact" onClick={(e) => smoothTo(e, "contact")} className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-ink border-b border-ink pb-1 hover:text-gold hover:border-gold transition self-start">
             Discuss your project <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
+        <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-4 md:auto-rows-[220px]">
           {projects.map((p) => (
-            <figure key={p.title} className="group">
-              <div className="relative overflow-hidden bg-muted aspect-[4/5]">
-                <img
-                  src={p.img}
-                  alt={`${p.title} — ${p.loc}`}
-                  loading="lazy"
-                  width={p.w}
-                  height={p.h}
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
-                />
+            <figure key={p.title + p.img} className={`group relative overflow-hidden bg-muted ${p.span}`}>
+              <img
+                src={p.img}
+                alt={`${p.title} — ${p.loc}`}
+                loading="lazy"
+                className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/85 via-ink/30 to-transparent p-5 opacity-0 transition group-hover:opacity-100">
+                <p className="text-[0.65rem] uppercase tracking-[0.24em] text-gold-soft">{p.tag} · {p.loc}</p>
+                <h3 className="mt-1 font-serif text-xl text-primary-foreground">{p.title}</h3>
               </div>
-              <figcaption className="mt-5 flex items-baseline justify-between gap-4">
-                <div>
-                  <p className="text-[0.68rem] uppercase tracking-[0.24em] text-gold">{p.tag}</p>
-                  <h3 className="mt-2 font-serif text-2xl text-ink">{p.title}</h3>
-                </div>
-                <span className="text-xs text-muted-foreground">{p.loc}</span>
-              </figcaption>
             </figure>
           ))}
         </div>
@@ -210,6 +367,47 @@ function Projects() {
     </section>
   );
 }
+
+/* ------------------------------ PROCESS ------------------------------ */
+
+const phases = [
+  { n: "01", title: "Initial Analysis", desc: "Objectives, project needs, budget and plot constraints defined together with the client." },
+  { n: "02", title: "Preliminary Design", desc: "An initial architectural and constructive proposal adapted to the project characteristics." },
+  { n: "03", title: "Licences", desc: "Preparation of the technical project and coordination of administrative processing to begin works." },
+  { n: "04", title: "Construction", desc: "Execution with prior planning, quality control and continuous monitoring of progress." },
+  { n: "05", title: "Delivery", desc: "Final review of the property, documentation handover and commissioning of the project." },
+  { n: "06", title: "After-sales", desc: "Post-completion follow-up to guarantee the correct condition and functioning of the home." },
+];
+
+function Process() {
+  return (
+    <section id="process" className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32 scroll-mt-24">
+      <div className="max-w-3xl">
+        <p className="eyebrow">The Process</p>
+        <h2 className="mt-4 font-serif text-5xl leading-tight md:text-6xl">
+          Six phases, one <em>continuous</em> team.
+        </h2>
+        <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+          From the first plot analysis to after-sales, every phase is coordinated in-house. One point of contact, a single plan, transparent reporting.
+        </p>
+      </div>
+
+      <ol className="mt-16 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+        {phases.map((p) => (
+          <li key={p.n} className="group flex gap-6 bg-background p-8 transition hover:bg-secondary/60">
+            <span className="font-serif text-4xl text-gold leading-none">{p.n}</span>
+            <div>
+              <h3 className="font-serif text-2xl text-ink leading-tight">{p.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}
+
+/* ------------------------------ WHY US ------------------------------ */
 
 const reasons = [
   { icon: Award, title: "20+ years of experience", desc: "Delivery across residential and complex building works." },
@@ -220,15 +418,13 @@ const reasons = [
 
 function WhyUs() {
   return (
-    <section id="why" className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32">
+    <section id="why" className="mx-auto max-w-7xl px-6 py-24 md:px-10 md:py-32 scroll-mt-24">
       <div className="grid gap-16 md:grid-cols-2 md:gap-20">
         <div className="relative">
           <img
-            src={aboutTerrace}
-            alt="Mediterranean terrace with pergola and olive tree"
+            src={v50.url}
+            alt="Interior detail of a completed villa reform"
             loading="lazy"
-            width={1400}
-            height={1200}
             className="w-full object-cover aspect-[5/6]"
           />
           <div className="absolute -bottom-6 -right-6 hidden bg-gold px-8 py-6 md:block">
@@ -243,7 +439,7 @@ function WhyUs() {
             The quiet <em>discipline</em> of a good build.
           </h2>
           <p className="mt-6 text-base leading-relaxed text-muted-foreground">
-            Overseas homeowners hire us because the process is calm, the reporting is clear, and the finishes hold up. We take responsibility from concept to keys.
+            Overseas homeowners hire us because the process is calm, the reporting is clear, and the finishes hold up. We take responsibility from concept to keys — coordinating architects, engineers and trades under a single, technical plan.
           </p>
 
           <ul className="mt-10 divide-y divide-border border-y border-border">
@@ -258,19 +454,79 @@ function WhyUs() {
             ))}
           </ul>
 
-          <blockquote className="mt-10 border-l-2 border-gold pl-6 font-serif text-xl italic leading-relaxed text-ink">
-            "They ran the entire build from Northern Europe — weekly reports, no surprises. The villa was delivered on time and beautifully finished."
-            <footer className="mt-4 text-xs not-italic tracking-[0.2em] uppercase text-muted-foreground font-sans">— Homeowner, Marbella</footer>
-          </blockquote>
+          <div className="mt-10 grid gap-6 sm:grid-cols-2">
+            <blockquote className="border-l-2 border-gold pl-5 font-serif text-lg italic leading-relaxed text-ink">
+              "Impressive construction work. Highly recommended."
+              <footer className="mt-3 text-[0.65rem] not-italic tracking-[0.2em] uppercase text-muted-foreground font-sans">Laura Martínez · Homeowner</footer>
+            </blockquote>
+            <blockquote className="border-l-2 border-gold pl-5 font-serif text-lg italic leading-relaxed text-ink">
+              "Great communication and unbeatable final results."
+              <footer className="mt-3 text-[0.65rem] not-italic tracking-[0.2em] uppercase text-muted-foreground font-sans">Javier Rodríguez · Property investor</footer>
+            </blockquote>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
+/* ------------------------------ FAQ ------------------------------ */
+
+const faqs = [
+  { q: "Where does RK Topcraft operate on the Costa del Sol?", a: "We build across the Costa del Sol — with concentration in Marbella, Estepona, Mijas and Benalmádena — adapting to the specific conditions of each plot and municipality." },
+  { q: "What types of homes do you build?", a: "We specialise in bespoke single-family villas and residential reforms, always working from a properly defined technical project." },
+  { q: "Are you a builder, developer, or both?", a: "We act as builder and can also intervene in earlier development phases of residential projects, coordinating execution and pre-construction workstreams." },
+  { q: "Who prepares the technical project?", a: "Construction is executed against a technical project defined by external technical teams. Our role focuses on planning, coordination and on-site execution." },
+  { q: "Do you handle building licences?", a: "Yes — we coordinate the preparation of documentation and follow-up of administrative processes needed to obtain licences, in collaboration with the responsible technicians." },
+  { q: "Do I need to already own a plot?", a: "No. We can assist you in searching for and evaluating a plot on the Costa del Sol, assessing its viability before the construction project begins." },
+];
+
+function FAQ() {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <section id="faq" className="border-t border-border bg-secondary/30 py-24 md:py-32 scroll-mt-24">
+      <div className="mx-auto max-w-5xl px-6 md:px-10">
+        <div className="max-w-3xl">
+          <p className="eyebrow">Frequently Asked</p>
+          <h2 className="mt-4 font-serif text-5xl leading-tight md:text-6xl">
+            Building on the coast — <em>answered.</em>
+          </h2>
+        </div>
+
+        <ul className="mt-14 divide-y divide-border border-y border-border">
+          {faqs.map((f, i) => {
+            const isOpen = open === i;
+            return (
+              <li key={f.q}>
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="flex w-full items-start justify-between gap-8 py-6 text-left transition hover:text-gold"
+                  aria-expanded={isOpen}
+                >
+                  <span className="font-serif text-xl leading-snug text-ink md:text-2xl">{f.q}</span>
+                  <span className="mt-1 flex-none text-gold">
+                    {isOpen ? <Minus className="h-5 w-5" /> : <Plus className="h-5 w-5" />}
+                  </span>
+                </button>
+                <div className={`grid transition-all duration-300 ${isOpen ? "grid-rows-[1fr] pb-6 opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
+                  <div className="overflow-hidden">
+                    <p className="max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">{f.a}</p>
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------ CONTACT ------------------------------ */
+
 function ContactCTA() {
   return (
-    <section id="contact" className="relative overflow-hidden bg-ink text-primary-foreground">
+    <section id="contact" className="relative overflow-hidden bg-ink text-primary-foreground scroll-mt-24">
       <div className="mx-auto grid max-w-7xl gap-16 px-6 py-24 md:grid-cols-[3fr_2fr] md:px-10 md:py-32">
         <div>
           <p className="eyebrow text-gold-soft">Start a project</p>
@@ -291,7 +547,7 @@ function ContactCTA() {
           </div>
         </div>
 
-        <div className="border-l border-primary-foreground/15 pl-10 hidden md:block">
+        <div className="md:border-l md:border-primary-foreground/15 md:pl-10">
           <p className="eyebrow text-gold-soft">Direct contacts</p>
           <dl className="mt-8 space-y-6 text-sm">
             <ContactRow icon={Phone} label="Telephone" value={PHONE} />
