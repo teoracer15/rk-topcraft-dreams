@@ -777,7 +777,8 @@ function BeforeAfter() {
 /* ---------- Areas Map ---------- */
 
 const areas = [
-  { id: "estepona", name: "Estepona", x: 18, y: 60, note: "Beachfront villas & new builds." },
+  { id: "sotogrande", name: "Sotogrande", x: 6, y: 68, note: "Gated coastal estates & polo-country residences." },
+  { id: "estepona", name: "Estepona", x: 20, y: 60, note: "Beachfront villas & new builds." },
   { id: "marbella", name: "Marbella", x: 40, y: 55, note: "Luxury residences & reforms." },
   { id: "mijas", name: "Mijas", x: 60, y: 50, note: "Hillside villas & interiors." },
   { id: "benalmadena", name: "Benalmádena", x: 78, y: 52, note: "Detached homes & pools." },
