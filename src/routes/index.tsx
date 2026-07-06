@@ -1081,7 +1081,7 @@ function Footer() {
         <div>
           <p className="text-[0.65rem] uppercase tracking-[0.28em] text-clay-soft">Areas</p>
           <ul className="mt-4 space-y-2 text-sm text-ivory/80">
-            <li>Marbella</li><li>Estepona</li><li>Mijas</li><li>Benalmádena</li>
+            <li>Sotogrande</li><li>Marbella</li><li>Estepona</li><li>Mijas</li><li>Benalmádena</li>
           </ul>
         </div>
 
