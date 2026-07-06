@@ -32,6 +32,7 @@ const NAV = [
   { id: "services", label: "Services" },
   { id: "process", label: "Process" },
   { id: "projects", label: "Projects" },
+  { id: "ronda", label: "Ronda" },
   { id: "areas", label: "Areas" },
   { id: "voices", label: "Voices" },
   { id: "faq", label: "FAQ" },
