@@ -319,16 +319,16 @@ function Services() {
 /* ------------------------------ PROJECTS ------------------------------ */
 
 const projects = [
-  { img: v66.url, tag: "New Build", title: "Contemporary Villa", loc: "Marbella", span: "md:col-span-2 md:row-span-2 aspect-[4/3]" },
-  { img: v133.url, tag: "Renovation", title: "Vertical Reform", loc: "Marbella", span: "aspect-[3/4]" },
-  { img: v59.url, tag: "Outdoor Living", title: "Terrace & Pool", loc: "Estepona", span: "aspect-[3/4]" },
-  { img: v1.url, tag: "New Build", title: "Villa in Marbella", loc: "Marbella", span: "md:col-span-2 aspect-[16/10]" },
-  { img: v50.url, tag: "Renovation", title: "Interior Reform", loc: "Mijas", span: "aspect-[4/5]" },
-  { img: v27.url, tag: "New Build", title: "Structural Works", loc: "Marbella", span: "aspect-[4/5]" },
-  { img: v51.url, tag: "New Build", title: "Villa 51", loc: "Marbella", span: "aspect-[4/5]" },
-  { img: v65.url, tag: "New Build", title: "Detached Villa", loc: "Benalmádena", span: "aspect-[4/5]" },
-  { img: v2.url, tag: "Outdoor Living", title: "Facade & Pool", loc: "Estepona", span: "md:col-span-2 aspect-[16/9]" },
-  { img: v88.url, tag: "New Build", title: "Villa Delivery", loc: "Marbella", span: "aspect-[4/5]" },
+  { img: v66.url, tag: "New Build", title: "Contemporary Villa", loc: "Marbella" },
+  { img: v51.url, tag: "New Build", title: "Villa 51", loc: "Marbella" },
+  { img: v1.url, tag: "New Build", title: "Villa in Marbella", loc: "Marbella" },
+  { img: v133.url, tag: "Renovation", title: "Vertical Reform", loc: "Marbella" },
+  { img: v65.url, tag: "New Build", title: "Detached Villa", loc: "Benalmádena" },
+  { img: v27.url, tag: "New Build", title: "Structural Works", loc: "Marbella" },
+  { img: v50.url, tag: "Renovation", title: "Interior Reform", loc: "Mijas" },
+  { img: v59.url, tag: "Outdoor Living", title: "Terrace & Pool", loc: "Estepona" },
+  { img: v2.url, tag: "Outdoor Living", title: "Facade & Pool", loc: "Estepona" },
+  { img: v88.url, tag: "New Build", title: "Villa Delivery", loc: "Marbella" },
 ];
 
 function Projects() {
