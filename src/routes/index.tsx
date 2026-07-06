@@ -84,6 +84,7 @@ function Home() {
         <WhyStats />
         <Process />
         <Projects />
+        <RondaTeaser />
         <BeforeAfter />
         <AreasMap />
         <Testimonials />
