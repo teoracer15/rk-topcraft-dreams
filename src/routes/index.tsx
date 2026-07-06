@@ -945,15 +945,32 @@ function FAQ() {
 
 function ContactCTA() {
   const [form, setForm] = useState({ name: "", email: "", type: "Villa Construction", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "saving" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const text = encodeURIComponent(
-      `Hello RK Topcraft,\n\nName: ${form.name}\nEmail: ${form.email}\nProject: ${form.type}\n\n${form.message}`
-    );
-    window.open(`https://wa.me/34699757950?text=${text}`, "_blank");
-    setSent(true);
+    setStatus("saving");
+    setErrorMsg(null);
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error } = await supabase.from("leads").insert({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        project_type: form.type,
+        message: form.message.trim() || null,
+      });
+      if (error) throw error;
+      setStatus("sent");
+      const text = encodeURIComponent(
+        `Hello RK Topcraft,\n\nName: ${form.name}\nEmail: ${form.email}\nProject: ${form.type}\n\n${form.message}`
+      );
+      window.open(`https://wa.me/34699757950?text=${text}`, "_blank");
+    } catch (err) {
+      console.error("Lead submission failed", err);
+      setErrorMsg("Something went wrong. Please try WhatsApp or email us directly.");
+      setStatus("error");
+    }
   };
 
   return (
