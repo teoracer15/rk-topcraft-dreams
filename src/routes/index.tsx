@@ -945,15 +945,32 @@ function FAQ() {
 
 function ContactCTA() {
   const [form, setForm] = useState({ name: "", email: "", type: "Villa Construction", message: "" });
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "saving" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const text = encodeURIComponent(
-      `Hello RK Topcraft,\n\nName: ${form.name}\nEmail: ${form.email}\nProject: ${form.type}\n\n${form.message}`
-    );
-    window.open(`https://wa.me/34699757950?text=${text}`, "_blank");
-    setSent(true);
+    setStatus("saving");
+    setErrorMsg(null);
+    try {
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { error } = await supabase.from("leads").insert({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        project_type: form.type,
+        message: form.message.trim() || null,
+      });
+      if (error) throw error;
+      setStatus("sent");
+      const text = encodeURIComponent(
+        `Hello RK Topcraft,\n\nName: ${form.name}\nEmail: ${form.email}\nProject: ${form.type}\n\n${form.message}`
+      );
+      window.open(`https://wa.me/34699757950?text=${text}`, "_blank");
+    } catch (err) {
+      console.error("Lead submission failed", err);
+      setErrorMsg("Something went wrong. Please try WhatsApp or email us directly.");
+      setStatus("error");
+    }
   };
 
   return (
@@ -1021,10 +1038,11 @@ function ContactCTA() {
                 placeholder="Location, timeline, plot info…"
               />
             </div>
-            <button type="submit" className="w-full inline-flex items-center justify-center gap-2 bg-clay px-6 py-4 text-xs uppercase tracking-[0.24em] text-ivory hover:bg-teal transition">
-              {sent ? "Opened in WhatsApp — thanks!" : "Send via WhatsApp"} <ArrowUpRight className="h-4 w-4" />
+            <button type="submit" disabled={status === "saving"} className="w-full inline-flex items-center justify-center gap-2 bg-clay px-6 py-4 text-xs uppercase tracking-[0.24em] text-ivory hover:bg-teal transition disabled:opacity-60">
+              {status === "saving" ? "Sending…" : status === "sent" ? "Sent — thanks!" : "Send enquiry"} <ArrowUpRight className="h-4 w-4" />
             </button>
-            <p className="text-[0.65rem] text-muted-foreground text-center">Your message opens WhatsApp with your details pre-filled.</p>
+            {errorMsg && <p className="text-[0.7rem] text-red-600 text-center">{errorMsg}</p>}
+            <p className="text-[0.65rem] text-muted-foreground text-center">We store your enquiry securely and also open WhatsApp with your details.</p>
           </div>
         </form>
       </div>
