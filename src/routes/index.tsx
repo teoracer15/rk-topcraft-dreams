@@ -1229,24 +1229,56 @@ function RondaTeaser() {
             </div>
           </div>
 
-          {/* RIGHT — layered painting stack */}
-          <div className="relative aspect-[4/5] w-full">
-            <div className={`absolute inset-0 transition-all duration-[1400ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
+          {/* RIGHT — layered painting stack (click to reveal the other study) */}
+          <button
+            type="button"
+            onClick={() => setSwap((s) => !s)}
+            aria-label="Reveal the other concept study"
+            className="group relative aspect-[4/5] w-full cursor-pointer text-left"
+          >
+            {/* Back card */}
+            <div className={`absolute inset-0 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
                  style={{ transform: reveal ? `translate(-4%, 6%) rotate(-3deg) translate(${(mouse.x - 50) * -0.05}%, ${(mouse.y - 50) * -0.05}%)` : undefined }}>
               <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
-                <img src={ronda2.url} alt="Ronda concept painting — sunset facade" className="h-full w-full object-cover" />
+                <img
+                  key={`back-${swap}`}
+                  src={back.url}
+                  alt="Ronda concept painting"
+                  width={800}
+                  height={1000}
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width: 768px) 40vw, 90vw"
+                  className="h-full w-full object-cover animate-in fade-in duration-700"
+                />
                 <div className="absolute inset-0 ring-1 ring-ivory/20" />
-                <span className="absolute bottom-3 left-3 bg-teal-deep/70 backdrop-blur px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory/80">Study I · Facade</span>
+                <span className="absolute bottom-3 left-3 bg-teal-deep/70 backdrop-blur px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory/80">{backLabel}</span>
               </div>
             </div>
-            <div className={`absolute inset-0 transition-all duration-[1400ms] delay-200 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
+            {/* Front card */}
+            <div className={`absolute inset-0 transition-all duration-[900ms] delay-100 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
                  style={{ transform: reveal ? `translate(4%, -4%) rotate(2.5deg) translate(${(mouse.x - 50) * 0.06}%, ${(mouse.y - 50) * 0.06}%)` : undefined }}>
-              <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
-                <img src={ronda1.url} alt="Ronda concept painting — pool and bougainvillea" className="h-full w-full object-cover" />
+              <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] transition-transform duration-500 group-hover:scale-[1.015]">
+                <img
+                  key={`front-${swap}`}
+                  src={front.url}
+                  alt="Ronda concept painting"
+                  width={800}
+                  height={1000}
+                  loading="lazy"
+                  decoding="async"
+                  sizes="(min-width: 768px) 40vw, 90vw"
+                  className="h-full w-full object-cover animate-in fade-in duration-700"
+                />
                 <div className="absolute inset-0 ring-1 ring-ivory/20" />
-                <span className="absolute bottom-3 left-3 bg-clay/85 px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory">Study II · Terrace</span>
+                <span className="absolute bottom-3 left-3 bg-clay/85 px-2 py-1 text-[0.55rem] uppercase tracking-[0.3em] text-ivory">{frontLabel}</span>
               </div>
             </div>
+
+            {/* Tap hint */}
+            <span className={`pointer-events-none absolute bottom-2 right-2 z-10 border border-ivory/25 bg-teal-deep/60 backdrop-blur px-3 py-1.5 text-[0.55rem] uppercase tracking-[0.3em] text-ivory/80 transition-opacity duration-700 delay-[1200ms] ${reveal ? "opacity-100" : "opacity-0"} group-hover:bg-clay group-hover:text-ivory group-hover:border-clay`}>
+              Tap to reveal
+            </span>
 
             {/* Wax seal */}
             <div className={`absolute -top-4 -right-4 h-20 w-20 rounded-full border border-clay-soft/50 flex items-center justify-center rotate-[8deg] backdrop-blur-sm bg-teal-deep/40 transition-all duration-1000 delay-[1100ms] ${reveal ? "opacity-100 scale-100" : "opacity-0 scale-75"}`}>
@@ -1255,7 +1287,8 @@ function RondaTeaser() {
                 <div className="text-[0.5rem] tracking-[0.28em] text-ivory/70 uppercase">Private</div>
               </div>
             </div>
-          </div>
+          </button>
+
         </div>
       </div>
 
