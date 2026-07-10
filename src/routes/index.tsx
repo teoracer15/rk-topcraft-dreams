@@ -475,7 +475,7 @@ function useCounter(target: number, active: boolean, duration = 1600) {
 }
 
 const pillars = [
-  { icon: Award, num: 20, suffix: "+", label: "Years on the coast", note: "Residential and complex works delivered end-to-end." },
+  { icon: Award, num: 13, suffix: "+", label: "Years on the coast", note: "Residential and complex works delivered end-to-end." },
   { icon: ShieldCheck, num: 100, suffix: "%", label: "Licensed & insured", note: "Full project responsibility. Licence No. B75276881." },
   { icon: MapPin, num: 5, suffix: "", label: "Costa del Sol areas", note: "Sotogrande · Marbella · Estepona · Mijas · Benalmádena." },
   { icon: Languages, num: 4, suffix: "", label: "Languages spoken", note: "English · Spanish · German · Russian — full-cycle support." },
