@@ -326,7 +326,7 @@ function Hero({ lang }: { lang: Lang }) {
       {/* Palm-shadow SVG overlay */}
       <div className="pointer-events-none absolute inset-0 animate-palm mix-blend-multiply">
         <svg viewBox="0 0 800 800" className="h-full w-full" preserveAspectRatio="xMidYMid slice" aria-hidden>
-          <g fill="#0A3A34" opacity="0.5">
+          <g fill="#0D121F" opacity="0.65">
             <path d="M400 100 C 420 250, 500 380, 640 460 C 480 400, 420 480, 400 700 C 380 480, 320 400, 160 460 C 300 380, 380 250, 400 100 Z" />
           </g>
         </svg>

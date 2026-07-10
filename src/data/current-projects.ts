@@ -97,24 +97,31 @@ export const PROJECTS: CurrentProject[] = [
       status: "Nearing Completion",
     },
     gallery: [
+      // Whole house — exteriors
       { src: viewVillaNight.url, label: "Villa exterior at night" },
       { src: viewVillaDay.url, label: "Villa exterior by day" },
       { src: outsideViewPoolPlants.url, label: "Pool & landscaped garden" },
       { src: viewPoolVillaNight.url, label: "Pool & villa at night" },
-      { src: terracePalmsView.url, label: "Terrace with palm views" },
-      { src: plantsViewFromTerrace.url, label: "Garden view from terrace" },
+      // Entrance & stairs
       { src: outsideStairsEntrance.url, label: "Exterior entrance stairs" },
       { src: stairWalkDown.url, label: "Approach to entrance" },
       { src: topStairs.url, label: "Upper staircase" },
       { src: mainStairsInside.url, label: "Main interior staircase" },
-      { src: livingRoom.url, label: "Living room" },
-      { src: kitchenCloseUp.url, label: "Kitchen — detail" },
+      // Bedrooms
       { src: hallwayMaster.url, label: "Hallway to master suite" },
       { src: masterView.url, label: "Master suite — view" },
       { src: masterBedViewTerrace.url, label: "Master bedroom with terrace view" },
       { src: bedroom1.url, label: "Guest bedroom" },
       { src: bed2.url, label: "Secondary bedroom" },
+      // Bathroom
       { src: bathroom.url, label: "Bathroom" },
+      // Living room & kitchen
+      { src: livingRoom.url, label: "Living room" },
+      { src: kitchenCloseUp.url, label: "Kitchen — detail" },
+      // Views & terrace
+      { src: terracePalmsView.url, label: "Terrace with palm views" },
+      { src: plantsViewFromTerrace.url, label: "Garden view from terrace" },
+      // Lower level & extras
       { src: basement.url, label: "Lower level" },
       { src: basementV1.url, label: "Lower level — alternate view" },
       { src: basementV2.url, label: "Lower level — detail" },
