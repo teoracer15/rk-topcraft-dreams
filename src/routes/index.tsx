@@ -251,17 +251,32 @@ function Header({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
       {/* Mobile drawer */}
       <div className={`lg:hidden overflow-hidden bg-ivory border-t border-border transition-[max-height,opacity] duration-300 ${open ? "max-h-[640px] opacity-100" : "max-h-0 opacity-0"}`}>
         <nav className="flex flex-col divide-y divide-border px-6 py-2">
-          {NAV.filter((n) => n.id !== "top").map((n) => (
-            <a
-              key={n.id}
-              href={`#${n.id}`}
-              onClick={(e) => handleClick(e, n.id)}
-              className={`flex items-center justify-between py-4 text-sm uppercase tracking-[0.22em] transition ${active === n.id ? "text-clay" : "text-ink"}`}
-            >
-              {n.label}
-              <ArrowUpRight className="h-4 w-4 opacity-40" />
-            </a>
-          ))}
+          {NAV.filter((n) => n.id !== "top").map((n) => {
+            if (n.to) {
+              return (
+                <Link
+                  key={n.id}
+                  to={n.to}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-between py-4 text-sm uppercase tracking-[0.22em] text-ink"
+                >
+                  {n.label}
+                  <ArrowUpRight className="h-4 w-4 opacity-40" />
+                </Link>
+              );
+            }
+            return (
+              <a
+                key={n.id}
+                href={`#${n.id}`}
+                onClick={(e) => handleClick(e, n.id)}
+                className={`flex items-center justify-between py-4 text-sm uppercase tracking-[0.22em] transition ${active === n.id ? "text-clay" : "text-ink"}`}
+              >
+                {n.label}
+                <ArrowUpRight className="h-4 w-4 opacity-40" />
+              </a>
+            );
+          })}
           <a href={WA_LINK} target="_blank" rel="noreferrer" className="mt-4 mb-4 inline-flex items-center justify-center gap-2 bg-clay px-5 py-3 text-xs uppercase tracking-[0.22em] text-ivory">
             <MessageCircle className="h-4 w-4" /> WhatsApp {PHONE}
           </a>
