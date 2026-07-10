@@ -656,16 +656,31 @@ function Process() {
 
 type ProjectCat = "All" | "Villas" | "Renovations" | "Pools & Outdoor";
 const projects: { img: string; cat: Exclude<ProjectCat, "All">; title: string; loc: string }[] = [
+  { img: lrPool.url, cat: "Villas", title: "La Roca de San Diego", loc: "Sotogrande" },
+  { img: pal1.url, cat: "Villas", title: "La Paloma Villa", loc: "Manilva" },
+  { img: pal2.url, cat: "Villas", title: "La Paloma — Interior", loc: "Manilva" },
   { img: v66.url, cat: "Villas", title: "Contemporary Villa", loc: "Marbella" },
   { img: v51.url, cat: "Villas", title: "Villa 51", loc: "Marbella" },
+  { img: pal3.url, cat: "Villas", title: "La Paloma — Living", loc: "Manilva" },
   { img: v1.url, cat: "Villas", title: "Cliffside Residence", loc: "Marbella" },
-  { img: v133.url, cat: "Renovations", title: "Vertical Reform", loc: "Marbella" },
+  { img: lrMaster.url, cat: "Villas", title: "Master Suite — La Roca", loc: "Sotogrande" },
   { img: v65.url, cat: "Villas", title: "Detached Villa", loc: "Benalmádena" },
+  { img: pal4.url, cat: "Villas", title: "La Paloma — Detail", loc: "Manilva" },
+  { img: v88.url, cat: "Villas", title: "Villa Delivery", loc: "Marbella" },
+  { img: est1.url, cat: "Renovations", title: "Estepona Apartment", loc: "Estepona" },
+  { img: est2.url, cat: "Renovations", title: "Estepona Apt — Kitchen", loc: "Estepona" },
+  { img: est3.url, cat: "Renovations", title: "Estepona Apt — Living", loc: "Estepona" },
+  { img: v133.url, cat: "Renovations", title: "Vertical Reform", loc: "Marbella" },
+  { img: est4.url, cat: "Renovations", title: "Estepona Apt — Bath", loc: "Estepona" },
   { img: v27.url, cat: "Renovations", title: "Structural Works", loc: "Marbella" },
+  { img: est5.url, cat: "Renovations", title: "Estepona Apt — Detail", loc: "Estepona" },
   { img: v50.url, cat: "Renovations", title: "Interior Reform", loc: "Mijas" },
+  { img: est6.url, cat: "Renovations", title: "Estepona Apt — Bedroom", loc: "Estepona" },
+  { img: lrTerrace.url, cat: "Pools & Outdoor", title: "Terrace & Palms — La Roca", loc: "Sotogrande" },
   { img: v59.url, cat: "Pools & Outdoor", title: "Terrace & Pool", loc: "Estepona" },
   { img: v2.url, cat: "Pools & Outdoor", title: "Facade & Pool", loc: "Estepona" },
-  { img: v88.url, cat: "Villas", title: "Villa Delivery", loc: "Marbella" },
+  { img: pal5.url, cat: "Pools & Outdoor", title: "La Paloma — Outdoor", loc: "Manilva" },
+  { img: pal6.url, cat: "Pools & Outdoor", title: "La Paloma — Terrace", loc: "Manilva" },
 ];
 
 function Projects() {
