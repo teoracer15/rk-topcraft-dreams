@@ -200,6 +200,17 @@ function Header({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
             const isActive = active === n.id;
             const base = solid ? "text-ink/70 hover:text-ink" : "text-ivory/85 hover:text-ivory";
             const activeCls = solid ? "text-clay" : "text-clay-soft";
+            if (n.to) {
+              return (
+                <Link
+                  key={n.id}
+                  to={n.to}
+                  className={`relative py-2 transition ${base}`}
+                >
+                  {n.label}
+                </Link>
+              );
+            }
             return (
               <a
                 key={n.id}
