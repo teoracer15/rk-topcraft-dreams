@@ -6,23 +6,39 @@
  * ─────────────────────────────────────────────────────────────────
  *  1. Duplicate an entry in the PROJECTS array below.
  *  2. Give it a unique `slug` (used in the URL: /projects/<slug>).
- *  3. Replace the placeholder `gallery` items with real photos.
- *
- *  IMAGE PLACEHOLDERS
- *  Each gallery entry currently has `src: null` and a short `label`.
- *  The UI renders a labelled placeholder box in that slot so you can
- *  see exactly where each photo will go. To drop in a real photo:
- *
- *    a) Upload it via lovable-assets and put the resulting
- *       `.asset.json` file under  src/assets/current-projects/
- *    b) Import it at the top of this file, e.g.
- *         import laRocaExterior1 from
- *           "@/assets/current-projects/la-roca-exterior-1.jpg.asset.json";
- *    c) Set `src: laRocaExterior1.url` on the matching gallery entry.
- *
- *  Nothing else needs to change — the list page and the detail page
- *  both read from this file.
+ *  3. Upload photos via lovable-assets under
+ *       src/assets/projects/<project-slug>/
+ *     then import their .asset.json files at the top of this file
+ *     and reference `.url` on each gallery entry.
  */
+
+// La Roca de San Diego — photos from Google Drive
+import viewVillaNight from "@/assets/projects/la-roca/view-villa-night.jpg.asset.json";
+import viewVillaDay from "@/assets/projects/la-roca/view-villa-day.jpg.asset.json";
+import outsideViewPoolPlants from "@/assets/projects/la-roca/outside-view-pool-plants.jpg.asset.json";
+import viewPoolVillaNight from "@/assets/projects/la-roca/view-pool-villa-night.jpg.asset.json";
+import terracePalmsView from "@/assets/projects/la-roca/terrace-palms-view.jpg.asset.json";
+import plantsViewFromTerrace from "@/assets/projects/la-roca/plants-view-from-terrace.jpg.asset.json";
+import outsideStairsEntrance from "@/assets/projects/la-roca/outside-stairs-entrance.jpg.asset.json";
+import stairWalkDown from "@/assets/projects/la-roca/stair-walk-down-outside-entrance.jpg.asset.json";
+import topStairs from "@/assets/projects/la-roca/top-stairs.jpg.asset.json";
+import mainStairsInside from "@/assets/projects/la-roca/main-stairs-inside.jpg.asset.json";
+import livingRoom from "@/assets/projects/la-roca/living-room.jpg.asset.json";
+import kitchenCloseUp from "@/assets/projects/la-roca/kitchen-close-up.jpg.asset.json";
+import hallwayMaster from "@/assets/projects/la-roca/hallway-master.jpg.asset.json";
+import masterView from "@/assets/projects/la-roca/master-view.jpg.asset.json";
+import masterBedViewTerrace from "@/assets/projects/la-roca/master-bed-view-terrace.jpg.asset.json";
+import bedroom1 from "@/assets/projects/la-roca/bedroom-1.jpg.asset.json";
+import bed2 from "@/assets/projects/la-roca/bed-2.jpg.asset.json";
+import bathroom from "@/assets/projects/la-roca/bathroom.jpg.asset.json";
+import basement from "@/assets/projects/la-roca/basement.jpg.asset.json";
+import basementV1 from "@/assets/projects/la-roca/basement-v1.jpg.asset.json";
+import basementV2 from "@/assets/projects/la-roca/basement-v2.jpg.asset.json";
+import garage from "@/assets/projects/la-roca/garage.jpg.asset.json";
+import oliveTreeProgress from "@/assets/projects/la-roca/olive-tree-progress.jpg.asset.json";
+import adShot from "@/assets/projects/la-roca/ad.jpg.asset.json";
+import extra1 from "@/assets/projects/la-roca/extra-1.jpg.asset.json";
+import extra2 from "@/assets/projects/la-roca/extra-2.jpg.asset.json";
 
 export type ProjectStatus =
   | "In Progress"
@@ -83,12 +99,32 @@ export const PROJECTS: CurrentProject[] = [
       status: "Nearing Completion",
     },
     gallery: [
-      { src: null, label: "Exterior — front elevation" },
-      { src: null, label: "Exterior — pool & terrace" },
-      { src: null, label: "Interior — living area" },
-      { src: null, label: "Interior — kitchen" },
-      { src: null, label: "Interior — master suite" },
-      { src: null, label: "Detail — stonework / finishes" },
+      { src: viewVillaNight.url, label: "Villa exterior at night" },
+      { src: viewVillaDay.url, label: "Villa exterior by day" },
+      { src: outsideViewPoolPlants.url, label: "Pool & landscaped garden" },
+      { src: viewPoolVillaNight.url, label: "Pool & villa at night" },
+      { src: terracePalmsView.url, label: "Terrace with palm views" },
+      { src: plantsViewFromTerrace.url, label: "Garden view from terrace" },
+      { src: outsideStairsEntrance.url, label: "Exterior entrance stairs" },
+      { src: stairWalkDown.url, label: "Approach to entrance" },
+      { src: topStairs.url, label: "Upper staircase" },
+      { src: mainStairsInside.url, label: "Main interior staircase" },
+      { src: livingRoom.url, label: "Living room" },
+      { src: kitchenCloseUp.url, label: "Kitchen — detail" },
+      { src: hallwayMaster.url, label: "Hallway to master suite" },
+      { src: masterView.url, label: "Master suite — view" },
+      { src: masterBedViewTerrace.url, label: "Master bedroom with terrace view" },
+      { src: bedroom1.url, label: "Guest bedroom" },
+      { src: bed2.url, label: "Secondary bedroom" },
+      { src: bathroom.url, label: "Bathroom" },
+      { src: basement.url, label: "Lower level" },
+      { src: basementV1.url, label: "Lower level — alternate view" },
+      { src: basementV2.url, label: "Lower level — detail" },
+      { src: garage.url, label: "Garage" },
+      { src: oliveTreeProgress.url, label: "Olive tree — grounds in progress" },
+      { src: adShot.url, label: "Feature shot" },
+      { src: extra1.url, label: "Additional view" },
+      { src: extra2.url, label: "Additional view" },
     ],
   },
 ];
