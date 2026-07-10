@@ -327,7 +327,7 @@ function Hero({ lang }: { lang: Lang }) {
         </div>
 
         <div className="mt-16 grid grid-cols-2 gap-8 border-t border-ivory/20 pt-8 text-ivory/90 md:mt-24 md:grid-cols-4 reveal">
-          <HeroStat n="20+" label="Years of experience" />
+          <HeroStat n="13+" label="Years on the coast" />
           <HeroStat n="5" label="Municipalities served" />
           <HeroStat n="4" label="Languages spoken" />
           <HeroStat n="B75276881" label="Licence number" small />
@@ -355,7 +355,7 @@ function HeroStat({ n, label, small }: { n: string; label: string; small?: boole
 /* ---------- Marquee strip ---------- */
 
 function Marquee() {
-  const items = ["Sotogrande", "Marbella", "Estepona", "Mijas", "Benalmádena", "Licensed & Insured", "20+ Years Experience", "English · Spanish · German · Russian"];
+  const items = ["Sotogrande", "Marbella", "Estepona", "Mijas", "Benalmádena", "Licensed & Insured", "13+ Years on the Coast", "English · Spanish · German · Russian"];
   const doubled = [...items, ...items, ...items, ...items];
   return (
     <div className="border-y border-border/60 bg-sand overflow-hidden">
@@ -475,7 +475,7 @@ function useCounter(target: number, active: boolean, duration = 1600) {
 }
 
 const pillars = [
-  { icon: Award, num: 20, suffix: "+", label: "Years on the coast", note: "Residential and complex works delivered end-to-end." },
+  { icon: Award, num: 13, suffix: "+", label: "Years on the coast", note: "Residential and complex works delivered end-to-end." },
   { icon: ShieldCheck, num: 100, suffix: "%", label: "Licensed & insured", note: "Full project responsibility. Licence No. B75276881." },
   { icon: MapPin, num: 5, suffix: "", label: "Costa del Sol areas", note: "Sotogrande · Marbella · Estepona · Mijas · Benalmádena." },
   { icon: Languages, num: 4, suffix: "", label: "Languages spoken", note: "English · Spanish · German · Russian — full-cycle support." },
@@ -1155,7 +1155,10 @@ function FloatingWhatsApp() {
 function RondaTeaser() {
   const [reveal, setReveal] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
-  const [mouse, setMouse] = useState({ x: 50, y: 50 });
+  const backRef = useRef<HTMLDivElement | null>(null);
+  const frontRef = useRef<HTMLDivElement | null>(null);
+  const spotRef = useRef<HTMLDivElement | null>(null);
+  const rafRef = useRef<number | null>(null);
   const [swap, setSwap] = useState(false);
 
   useEffect(() => {
@@ -1169,9 +1172,33 @@ function RondaTeaser() {
   }, []);
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window === "undefined") return;
+    // Skip parallax for reduced-motion or coarse (touch) pointers.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const r = e.currentTarget.getBoundingClientRect();
-    setMouse({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    if (rafRef.current != null) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      const dx = (x - 50).toFixed(2);
+      const dy = (y - 50).toFixed(2);
+      if (spotRef.current) {
+        spotRef.current.style.setProperty("--mx", `${x}%`);
+        spotRef.current.style.setProperty("--my", `${y}%`);
+      }
+      if (backRef.current) {
+        backRef.current.style.transform = `translate(calc(-4% + ${(-Number(dx) * 0.05).toFixed(2)}%), calc(6% + ${(-Number(dy) * 0.05).toFixed(2)}%)) rotate(-3deg)`;
+      }
+      if (frontRef.current) {
+        frontRef.current.style.transform = `translate(calc(4% + ${(Number(dx) * 0.06).toFixed(2)}%), calc(-4% + ${(Number(dy) * 0.06).toFixed(2)}%)) rotate(2.5deg)`;
+      }
+    });
   };
+
+  useEffect(() => () => { if (rafRef.current != null) cancelAnimationFrame(rafRef.current); }, []);
+
 
   // Front/back pair — click cycles them while the layered design stays identical
   const back = swap ? ronda1 : ronda2;
@@ -1207,12 +1234,14 @@ function RondaTeaser() {
         <div className="absolute inset-0 bg-gradient-to-b from-teal-deep/85 via-teal-deep/70 to-teal-deep/95" />
         {/* Cursor-follow spotlight */}
         <div
+          ref={spotRef}
           className="pointer-events-none absolute inset-0 transition-opacity duration-700"
           style={{
-            background: `radial-gradient(400px circle at ${mouse.x}% ${mouse.y}%, rgba(225,147,111,0.18), transparent 60%)`,
+            background: "radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(197,160,89,0.18), transparent 60%)",
             opacity: reveal ? 1 : 0,
           }}
         />
+
       </div>
 
 
@@ -1267,8 +1296,9 @@ function RondaTeaser() {
             className="group relative aspect-[4/5] w-full cursor-pointer text-left"
           >
             {/* Back card */}
-            <div className={`absolute inset-0 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
-                 style={{ transform: reveal ? `translate(-4%, 6%) rotate(-3deg) translate(${(mouse.x - 50) * -0.05}%, ${(mouse.y - 50) * -0.05}%)` : undefined }}>
+            <div ref={backRef} className={`absolute inset-0 will-change-transform transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
+                 style={reveal ? { transform: "translate(-4%, 6%) rotate(-3deg)" } : undefined}>
+
               <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
                 <img
                   key={`back-${swap}`}
@@ -1286,8 +1316,9 @@ function RondaTeaser() {
               </div>
             </div>
             {/* Front card */}
-            <div className={`absolute inset-0 transition-all duration-[900ms] delay-100 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
-                 style={{ transform: reveal ? `translate(4%, -4%) rotate(2.5deg) translate(${(mouse.x - 50) * 0.06}%, ${(mouse.y - 50) * 0.06}%)` : undefined }}>
+            <div ref={frontRef} className={`absolute inset-0 will-change-transform transition-all duration-[900ms] delay-100 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
+                 style={reveal ? { transform: "translate(4%, -4%) rotate(2.5deg)" } : undefined}>
+
               <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] transition-transform duration-500 group-hover:scale-[1.015]">
                 <img
                   key={`front-${swap}`}

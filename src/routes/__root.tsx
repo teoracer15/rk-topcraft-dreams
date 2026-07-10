@@ -73,7 +73,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "Refined construction, renovation and project management for international homeowners across Marbella, Estepona, Mijas and Benalmádena." },
       { name: "author", content: "RK Topcraft Construction" },
       { property: "og:title", content: "RK Topcraft — Build With Confidence" },
-      { property: "og:description", content: "Luxury villa construction, renovations and outdoor living on the Costa del Sol. 20+ years of experience. English · Spanish · German." },
+      { property: "og:description", content: "Luxury villa construction, renovations and outdoor living on the Costa del Sol. 13+ years on the coast. English · Spanish · German · Russian." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
