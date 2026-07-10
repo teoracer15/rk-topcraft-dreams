@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowUpRight, Building2, Hammer, Waves, ClipboardCheck,
@@ -29,11 +29,13 @@ export const Route = createFileRoute("/")({
 const PHONE = "699 757 950";
 const WA_LINK = "https://wa.me/34699757950?text=Hello%20RK%20Topcraft%2C%20I%27d%20like%20to%20discuss%20a%20project.";
 
-const NAV = [
+type NavItem = { id: string; label: string; to?: string };
+const NAV: NavItem[] = [
   { id: "top", label: "Home" },
   { id: "services", label: "Services" },
   { id: "process", label: "Process" },
-  { id: "projects", label: "Projects" },
+  { id: "projects", label: "Gallery" },
+  { id: "current-projects", label: "Current Projects", to: "/projects" },
   { id: "ronda", label: "Ronda" },
   { id: "areas", label: "Areas" },
   { id: "voices", label: "Voices" },
@@ -198,6 +200,17 @@ function Header({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
             const isActive = active === n.id;
             const base = solid ? "text-ink/70 hover:text-ink" : "text-ivory/85 hover:text-ivory";
             const activeCls = solid ? "text-clay" : "text-clay-soft";
+            if (n.to) {
+              return (
+                <Link
+                  key={n.id}
+                  to={n.to}
+                  className={`relative py-2 transition ${base}`}
+                >
+                  {n.label}
+                </Link>
+              );
+            }
             return (
               <a
                 key={n.id}
@@ -238,17 +251,32 @@ function Header({ lang, setLang }: { lang: Lang; setLang: (l: Lang) => void }) {
       {/* Mobile drawer */}
       <div className={`lg:hidden overflow-hidden bg-ivory border-t border-border transition-[max-height,opacity] duration-300 ${open ? "max-h-[640px] opacity-100" : "max-h-0 opacity-0"}`}>
         <nav className="flex flex-col divide-y divide-border px-6 py-2">
-          {NAV.filter((n) => n.id !== "top").map((n) => (
-            <a
-              key={n.id}
-              href={`#${n.id}`}
-              onClick={(e) => handleClick(e, n.id)}
-              className={`flex items-center justify-between py-4 text-sm uppercase tracking-[0.22em] transition ${active === n.id ? "text-clay" : "text-ink"}`}
-            >
-              {n.label}
-              <ArrowUpRight className="h-4 w-4 opacity-40" />
-            </a>
-          ))}
+          {NAV.filter((n) => n.id !== "top").map((n) => {
+            if (n.to) {
+              return (
+                <Link
+                  key={n.id}
+                  to={n.to}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center justify-between py-4 text-sm uppercase tracking-[0.22em] text-ink"
+                >
+                  {n.label}
+                  <ArrowUpRight className="h-4 w-4 opacity-40" />
+                </Link>
+              );
+            }
+            return (
+              <a
+                key={n.id}
+                href={`#${n.id}`}
+                onClick={(e) => handleClick(e, n.id)}
+                className={`flex items-center justify-between py-4 text-sm uppercase tracking-[0.22em] transition ${active === n.id ? "text-clay" : "text-ink"}`}
+              >
+                {n.label}
+                <ArrowUpRight className="h-4 w-4 opacity-40" />
+              </a>
+            );
+          })}
           <a href={WA_LINK} target="_blank" rel="noreferrer" className="mt-4 mb-4 inline-flex items-center justify-center gap-2 bg-clay px-5 py-3 text-xs uppercase tracking-[0.22em] text-ivory">
             <MessageCircle className="h-4 w-4" /> WhatsApp {PHONE}
           </a>
