@@ -19,6 +19,25 @@ import v51 from "@/assets/gr/villa-51.jpg.asset.json";
 import v88 from "@/assets/gr/villa-88.jpg.asset.json";
 import ronda1 from "@/assets/ronda/ronda-1.jpg.asset.json";
 import ronda2 from "@/assets/ronda/ronda-2.jpg.asset.json";
+// La Paloma villa
+import pal1 from "@/assets/paloma/paloma-1.jpg.asset.json";
+import pal2 from "@/assets/paloma/paloma-2.jpg.asset.json";
+import pal3 from "@/assets/paloma/paloma-3.jpg.asset.json";
+import pal4 from "@/assets/paloma/paloma-4.jpg.asset.json";
+import pal5 from "@/assets/paloma/paloma-5.jpg.asset.json";
+import pal6 from "@/assets/paloma/paloma-6.jpg.asset.json";
+// Estepona apartment renovation
+import est1 from "@/assets/estepona/estepona-1.jpg.asset.json";
+import est2 from "@/assets/estepona/estepona-2.jpg.asset.json";
+import est3 from "@/assets/estepona/estepona-3.jpg.asset.json";
+import est4 from "@/assets/estepona/estepona-4.jpg.asset.json";
+import est5 from "@/assets/estepona/estepona-5.jpg.asset.json";
+import est6 from "@/assets/estepona/estepona-6.jpg.asset.json";
+// La Roca de San Diego — for extra variety in the site gallery
+import lrLiving from "@/assets/projects/la-roca/living-room.jpg.asset.json";
+import lrPool from "@/assets/projects/la-roca/view-pool-villa-night.jpg.asset.json";
+import lrTerrace from "@/assets/projects/la-roca/terrace-palms-view.jpg.asset.json";
+import lrMaster from "@/assets/projects/la-roca/master-bed-view-terrace.jpg.asset.json";
 import beforeReno from "@/assets/renovation/before-renovation.png.asset.json";
 import costaMap from "@/assets/map/costa-del-sol-map.jpg.asset.json";
 
