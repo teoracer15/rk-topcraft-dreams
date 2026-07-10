@@ -1155,7 +1155,10 @@ function FloatingWhatsApp() {
 function RondaTeaser() {
   const [reveal, setReveal] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
-  const [mouse, setMouse] = useState({ x: 50, y: 50 });
+  const backRef = useRef<HTMLDivElement | null>(null);
+  const frontRef = useRef<HTMLDivElement | null>(null);
+  const spotRef = useRef<HTMLDivElement | null>(null);
+  const rafRef = useRef<number | null>(null);
   const [swap, setSwap] = useState(false);
 
   useEffect(() => {
@@ -1169,9 +1172,33 @@ function RondaTeaser() {
   }, []);
 
   const onMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window === "undefined") return;
+    // Skip parallax for reduced-motion or coarse (touch) pointers.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const r = e.currentTarget.getBoundingClientRect();
-    setMouse({ x: ((e.clientX - r.left) / r.width) * 100, y: ((e.clientY - r.top) / r.height) * 100 });
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    if (rafRef.current != null) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      const dx = (x - 50).toFixed(2);
+      const dy = (y - 50).toFixed(2);
+      if (spotRef.current) {
+        spotRef.current.style.setProperty("--mx", `${x}%`);
+        spotRef.current.style.setProperty("--my", `${y}%`);
+      }
+      if (backRef.current) {
+        backRef.current.style.transform = `translate(calc(-4% + ${(-Number(dx) * 0.05).toFixed(2)}%), calc(6% + ${(-Number(dy) * 0.05).toFixed(2)}%)) rotate(-3deg)`;
+      }
+      if (frontRef.current) {
+        frontRef.current.style.transform = `translate(calc(4% + ${(Number(dx) * 0.06).toFixed(2)}%), calc(-4% + ${(Number(dy) * 0.06).toFixed(2)}%)) rotate(2.5deg)`;
+      }
+    });
   };
+
+  useEffect(() => () => { if (rafRef.current != null) cancelAnimationFrame(rafRef.current); }, []);
+
 
   // Front/back pair — click cycles them while the layered design stays identical
   const back = swap ? ronda1 : ronda2;
