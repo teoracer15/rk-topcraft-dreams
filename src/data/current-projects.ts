@@ -92,10 +92,10 @@ export const PROJECTS: CurrentProject[] = [
       "The residence is currently in its final stages of finishing — interior joinery, stone work and outdoor living areas are being completed under close on-site supervision by the RK Topcraft team. Every detail, from the façade stonework to the millwork and pool terraces, has been designed and delivered end-to-end to match the expectations of an international owner.",
     facts: {
       location: "Sotogrande, Cádiz",
-      plotSize: "— placeholder —",
-      buildSize: "— placeholder —",
-      bedrooms: "— placeholder —",
-      bathrooms: "— placeholder —",
+      plotSize: "1,000 m²",
+      buildSize: "437 m² interior",
+      bedrooms: "4",
+      bathrooms: "5",
       status: "Nearing Completion",
     },
     gallery: [
@@ -121,8 +121,6 @@ export const PROJECTS: CurrentProject[] = [
       { src: basementV1.url, label: "Lower level — alternate view" },
       { src: basementV2.url, label: "Lower level — detail" },
       { src: garage.url, label: "Garage" },
-      { src: oliveTreeProgress.url, label: "Olive tree — grounds in progress" },
-      { src: adShot.url, label: "Feature shot" },
       { src: extra1.url, label: "Additional view" },
       { src: extra2.url, label: "Additional view" },
     ],
