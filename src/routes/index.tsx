@@ -1316,8 +1316,9 @@ function RondaTeaser() {
               </div>
             </div>
             {/* Front card */}
-            <div className={`absolute inset-0 transition-all duration-[900ms] delay-100 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
-                 style={{ transform: reveal ? `translate(4%, -4%) rotate(2.5deg) translate(${(mouse.x - 50) * 0.06}%, ${(mouse.y - 50) * 0.06}%)` : undefined }}>
+            <div ref={frontRef} className={`absolute inset-0 will-change-transform transition-all duration-[900ms] delay-100 ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[2deg]" : "opacity-0 translate-y-10 rotate-[6deg]"}`}
+                 style={reveal ? { transform: "translate(4%, -4%) rotate(2.5deg)" } : undefined}>
+
               <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)] transition-transform duration-500 group-hover:scale-[1.015]">
                 <img
                   key={`front-${swap}`}
