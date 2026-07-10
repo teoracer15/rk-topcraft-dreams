@@ -1296,8 +1296,9 @@ function RondaTeaser() {
             className="group relative aspect-[4/5] w-full cursor-pointer text-left"
           >
             {/* Back card */}
-            <div className={`absolute inset-0 transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
-                 style={{ transform: reveal ? `translate(-4%, 6%) rotate(-3deg) translate(${(mouse.x - 50) * -0.05}%, ${(mouse.y - 50) * -0.05}%)` : undefined }}>
+            <div ref={backRef} className={`absolute inset-0 will-change-transform transition-all duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${reveal ? "opacity-100 translate-y-0 rotate-[-2deg]" : "opacity-0 translate-y-10 rotate-[-6deg]"}`}
+                 style={reveal ? { transform: "translate(-4%, 6%) rotate(-3deg)" } : undefined}>
+
               <div className="relative h-full w-full shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]">
                 <img
                   key={`back-${swap}`}
