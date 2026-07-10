@@ -1234,12 +1234,14 @@ function RondaTeaser() {
         <div className="absolute inset-0 bg-gradient-to-b from-teal-deep/85 via-teal-deep/70 to-teal-deep/95" />
         {/* Cursor-follow spotlight */}
         <div
+          ref={spotRef}
           className="pointer-events-none absolute inset-0 transition-opacity duration-700"
           style={{
-            background: `radial-gradient(400px circle at ${mouse.x}% ${mouse.y}%, rgba(225,147,111,0.18), transparent 60%)`,
+            background: "radial-gradient(400px circle at var(--mx,50%) var(--my,50%), rgba(197,160,89,0.18), transparent 60%)",
             opacity: reveal ? 1 : 0,
           }}
         />
+
       </div>
 
 
