@@ -8,7 +8,7 @@ import headerBg from "@/assets/projects/la-roca/view-villa-day.jpg.asset.json";
 const WA_LINK =
   "https://wa.me/34699757950?text=Hello%20RK%20Topcraft%2C%20I%27d%20like%20to%20discuss%20a%20project.";
 
-export const Route = createFileRoute("/projects")({
+export const Route = createFileRoute("/projects/")({
   head: () => ({
     meta: [
       { title: "Current Projects — RK Topcraft, Costa del Sol" },
