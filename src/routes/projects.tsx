@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, MessageCircle } from "lucide-react";
 import { PROJECTS } from "@/data/current-projects";
 import { CurrentProjectCard } from "@/components/CurrentProjectCard";
+import headerBg from "@/assets/projects/la-roca/view-villa-day.jpg.asset.json";
+
 
 const WA_LINK =
   "https://wa.me/34699757950?text=Hello%20RK%20Topcraft%2C%20I%27d%20like%20to%20discuss%20a%20project.";
@@ -56,21 +58,29 @@ function CurrentProjectsPage() {
 function PageHeader() {
   return (
     <section className="relative overflow-hidden bg-teal-deep text-ivory">
-      <div className="absolute inset-0 opacity-[0.08] bg-[radial-gradient(circle_at_20%_20%,#C5A059_0,transparent_50%),radial-gradient(circle_at_80%_80%,#C5A059_0,transparent_45%)]" />
+      <img
+        src={headerBg.url}
+        alt="La Roca de San Diego — villa exterior by day"
+        loading="eager"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover opacity-45"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-teal-deep/70 via-teal-deep/60 to-teal-deep/90" />
+      <div className="absolute inset-0 opacity-[0.10] bg-[radial-gradient(circle_at_20%_20%,#C5A059_0,transparent_50%),radial-gradient(circle_at_80%_80%,#C5A059_0,transparent_45%)]" />
       <div className="relative mx-auto max-w-7xl px-6 pt-40 pb-24 md:px-10 md:pt-48 md:pb-32">
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-[0.65rem] uppercase tracking-[0.28em] text-ivory/70 hover:text-clay-soft transition"
+          className="inline-flex items-center gap-2 text-[0.65rem] uppercase tracking-[0.28em] text-ivory/80 hover:text-clay-soft transition"
         >
           ← RK Topcraft
         </Link>
         <p className="eyebrow mt-10 text-clay-soft">
           Live · Costa del Sol
         </p>
-        <h1 className="mt-6 font-serif text-6xl leading-[1.02] md:text-8xl max-w-4xl">
+        <h1 className="mt-6 font-serif text-6xl leading-[1.02] md:text-8xl max-w-4xl drop-shadow-[0_2px_20px_rgba(0,0,0,0.35)]">
           Current <em className="text-clay-soft">Projects</em>
         </h1>
-        <p className="mt-8 max-w-2xl font-serif-alt text-xl leading-relaxed text-ivory/80 md:text-2xl">
+        <p className="mt-8 max-w-2xl font-serif-alt text-xl leading-relaxed text-ivory/90 md:text-2xl">
           Ongoing villa construction and investment projects being delivered
           by RK Topcraft along the Costa del Sol.
         </p>
@@ -78,6 +88,7 @@ function PageHeader() {
     </section>
   );
 }
+
 
 function ClosingCTA() {
   return (
