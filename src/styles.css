@@ -98,7 +98,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01", "cv11";
+    font-feature-settings: "ss01";
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -106,14 +106,13 @@
     font-family: var(--font-serif);
     font-weight: 400;
     letter-spacing: -0.015em;
-    font-variation-settings: "SOFT" 30, "opsz" 60;
   }
   em {
     font-style: italic;
-    font-variation-settings: "SOFT" 100, "opsz" 60;
   }
   ::selection { background: var(--color-clay); color: var(--color-ivory); }
 }
+
 
 @utility font-serif { font-family: var(--font-serif); }
 @utility font-sans { font-family: var(--font-sans); }
