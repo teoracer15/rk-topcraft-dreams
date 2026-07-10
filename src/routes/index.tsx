@@ -1062,7 +1062,7 @@ function ContactCTA() {
           </div>
 
           <dl className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm max-w-md">
-            <ContactRow icon={Mail} label="Email" value="info@rktopcraft.com" />
+            <ContactRow icon={Mail} label="Email" value="rktopcraft@gmail.com" />
             <ContactRow icon={MapPin} label="Coverage" value="Sotogrande · Marbella · Estepona · Mijas · Benalmádena" />
             <ContactRow icon={Languages} label="Languages" value="English · Spanish · German · Russian" />
             <ContactRow icon={ShieldCheck} label="Licence" value="B75276881" />
@@ -1170,7 +1170,7 @@ function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-ivory/80">
             <li><a href={`tel:+34${PHONE.replace(/\s/g, "")}`} className="hover:text-clay-soft transition">{PHONE}</a></li>
             <li><a href={WA_LINK} target="_blank" rel="noreferrer" className="hover:text-clay-soft transition">WhatsApp</a></li>
-            <li><a href="mailto:info@rktopcraft.com" className="hover:text-clay-soft transition">info@rktopcraft.com</a></li>
+            <li><a href="mailto:rktopcraft@gmail.com" className="hover:text-clay-soft transition">rktopcraft@gmail.com</a></li>
           </ul>
         </div>
       </div>
