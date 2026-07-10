@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useState } from "react";
-import { ArrowUpRight, ChevronLeft, ChevronRight, MessageCircle, MapPin } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, MessageCircle, MapPin, X } from "lucide-react";
 import { getProjectBySlug, PROJECTS } from "@/data/current-projects";
 import { PlaceholderImage, StatusBadge } from "@/components/CurrentProjectCard";
 
@@ -195,89 +195,156 @@ function Gallery({
 }: {
   images: { src: string | null; label: string }[];
 }) {
-  const [i, setI] = useState(0);
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const total = images.length;
-  const current = images[i];
-  const go = (dir: number) => setI((prev) => (prev + dir + total) % total);
+
+  useEffect(() => {
+    if (lightbox === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowRight")
+        setLightbox((i) => (i === null ? 0 : (i + 1) % total));
+      if (e.key === "ArrowLeft")
+        setLightbox((i) => (i === null ? 0 : (i - 1 + total) % total));
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [lightbox, total]);
 
   return (
     <div>
-      <div className="relative aspect-[16/10] w-full overflow-hidden bg-secondary">
-        {current.src ? (
-          <img
-            src={current.src}
-            alt={current.label}
-            className="h-full w-full object-cover"
-            loading="eager"
-          />
-        ) : (
-          <PlaceholderImage label={current.label} />
-        )}
-
-        {/* Slot number */}
-        <div className="absolute top-4 left-4 bg-ink/80 text-ivory px-3 py-1.5 text-[0.6rem] uppercase tracking-[0.28em]">
-          {String(i + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-        </div>
-
-        {/* Caption */}
-        <div className="absolute bottom-4 left-4 bg-ivory/90 backdrop-blur px-3 py-1.5 text-[0.6rem] uppercase tracking-[0.28em] text-ink">
-          {current.label}
-        </div>
-
-        {/* Controls */}
-        {total > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={() => go(-1)}
-              aria-label="Previous image"
-              className="absolute top-1/2 left-4 -translate-y-1/2 h-11 w-11 flex items-center justify-center bg-ivory/90 hover:bg-clay hover:text-ivory transition text-ink"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => go(1)}
-              aria-label="Next image"
-              className="absolute top-1/2 right-4 -translate-y-1/2 h-11 w-11 flex items-center justify-center bg-ivory/90 hover:bg-clay hover:text-ivory transition text-ink"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
-          </>
-        )}
+      {/* Masonry grid — all photos labelled */}
+      <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 [column-fill:_balance]">
+        {images.map((img, i) => (
+          <figure
+            key={i}
+            onClick={() => setLightbox(i)}
+            className="group relative mb-4 block break-inside-avoid overflow-hidden bg-secondary cursor-pointer"
+          >
+            {img.src ? (
+              <img
+                src={img.src}
+                alt={img.label}
+                loading="lazy"
+                decoding="async"
+                className="block w-full h-auto object-cover transition duration-[900ms] group-hover:scale-[1.05]"
+              />
+            ) : (
+              <div className="aspect-[4/3]">
+                <PlaceholderImage label={img.label} />
+              </div>
+            )}
+            <div className="absolute top-3 left-3 bg-ink/80 text-ivory px-2.5 py-1 text-[0.55rem] uppercase tracking-[0.28em]">
+              {String(i + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            </div>
+            <figcaption className="absolute inset-x-0 bottom-0 translate-y-2 opacity-0 bg-gradient-to-t from-teal-deep/95 via-teal-deep/50 to-transparent p-5 transition duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+              <p className="text-[0.6rem] uppercase tracking-[0.28em] text-clay-soft">
+                Photo {i + 1}
+              </p>
+              <h3 className="mt-1 font-serif text-lg text-ivory">
+                {img.label}
+              </h3>
+            </figcaption>
+          </figure>
+        ))}
       </div>
 
       {/* Thumbnails */}
       {total > 1 && (
-        <div className="mt-4 grid grid-cols-3 gap-3 md:grid-cols-6">
-          {images.map((img, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => setI(idx)}
-              aria-label={`View image ${idx + 1}`}
-              className={`relative aspect-[4/3] overflow-hidden bg-secondary transition ${
-                idx === i
-                  ? "ring-2 ring-clay"
-                  : "opacity-70 hover:opacity-100"
-              }`}
-            >
-              {img.src ? (
-                <img
-                  src={img.src}
-                  alt={img.label}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-[repeating-linear-gradient(45deg,#F2ECE0_0_8px,#EDE5D3_8px_16px)]">
-                  <span className="text-[0.5rem] uppercase tracking-[0.24em] text-ink/50 px-2 text-center">
-                    {img.label}
-                  </span>
-                </div>
-              )}
-            </button>
-          ))}
+        <div className="mt-10">
+          <p className="eyebrow text-clay mb-4">Thumbnails</p>
+          <div className="grid grid-cols-4 gap-2 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10">
+            {images.map((img, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setLightbox(idx)}
+                aria-label={`Open ${img.label}`}
+                title={img.label}
+                className="group relative aspect-square overflow-hidden bg-secondary opacity-80 hover:opacity-100 hover:ring-2 hover:ring-clay transition"
+              >
+                {img.src ? (
+                  <img
+                    src={img.src}
+                    alt={img.label}
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center bg-[repeating-linear-gradient(45deg,#F2ECE0_0_8px,#EDE5D3_8px_16px)]">
+                    <span className="text-[0.5rem] uppercase tracking-[0.24em] text-ink/50 px-1 text-center">
+                      {img.label}
+                    </span>
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Lightbox */}
+      {lightbox !== null && images[lightbox] && (
+        <div
+          className="fixed inset-0 z-[100] bg-teal-deep/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-10"
+          onClick={() => setLightbox(null)}
+        >
+          <button
+            aria-label="Close"
+            className="absolute top-6 right-6 h-11 w-11 flex items-center justify-center text-ivory hover:text-clay-soft"
+            onClick={() => setLightbox(null)}
+          >
+            <X className="h-6 w-6" />
+          </button>
+          <button
+            aria-label="Previous"
+            className="absolute left-4 md:left-8 h-11 w-11 flex items-center justify-center text-ivory hover:text-clay-soft"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox((i) => (i === null ? 0 : (i - 1 + total) % total));
+            }}
+          >
+            <ChevronLeft className="h-8 w-8" />
+          </button>
+          <button
+            aria-label="Next"
+            className="absolute right-4 md:right-8 h-11 w-11 flex items-center justify-center text-ivory hover:text-clay-soft"
+            onClick={(e) => {
+              e.stopPropagation();
+              setLightbox((i) => (i === null ? 0 : (i + 1) % total));
+            }}
+          >
+            <ChevronRight className="h-8 w-8" />
+          </button>
+          <figure
+            className="max-w-6xl max-h-full flex flex-col items-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {images[lightbox].src ? (
+              <img
+                src={images[lightbox].src!}
+                alt={images[lightbox].label}
+                className="max-h-[80vh] w-auto object-contain"
+              />
+            ) : (
+              <div className="w-[min(90vw,900px)] aspect-[16/10]">
+                <PlaceholderImage label={images[lightbox].label} />
+              </div>
+            )}
+            <figcaption className="mt-4 text-center">
+              <p className="text-[0.62rem] uppercase tracking-[0.28em] text-clay-soft">
+                {String(lightbox + 1).padStart(2, "0")} /{" "}
+                {String(total).padStart(2, "0")}
+              </p>
+              <h3 className="mt-1 font-serif text-2xl text-ivory">
+                {images[lightbox].label}
+              </h3>
+            </figcaption>
+          </figure>
         </div>
       )}
     </div>
