@@ -35,8 +35,6 @@ import basement from "@/assets/projects/la-roca/basement.jpg.asset.json";
 import basementV1 from "@/assets/projects/la-roca/basement-v1.jpg.asset.json";
 import basementV2 from "@/assets/projects/la-roca/basement-v2.jpg.asset.json";
 import garage from "@/assets/projects/la-roca/garage.jpg.asset.json";
-import oliveTreeProgress from "@/assets/projects/la-roca/olive-tree-progress.jpg.asset.json";
-import adShot from "@/assets/projects/la-roca/ad.jpg.asset.json";
 import extra1 from "@/assets/projects/la-roca/extra-1.jpg.asset.json";
 import extra2 from "@/assets/projects/la-roca/extra-2.jpg.asset.json";
 
