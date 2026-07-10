@@ -19,6 +19,25 @@ import v51 from "@/assets/gr/villa-51.jpg.asset.json";
 import v88 from "@/assets/gr/villa-88.jpg.asset.json";
 import ronda1 from "@/assets/ronda/ronda-1.jpg.asset.json";
 import ronda2 from "@/assets/ronda/ronda-2.jpg.asset.json";
+// La Paloma villa
+import pal1 from "@/assets/paloma/paloma-1.jpg.asset.json";
+import pal2 from "@/assets/paloma/paloma-2.jpg.asset.json";
+import pal3 from "@/assets/paloma/paloma-3.jpg.asset.json";
+import pal4 from "@/assets/paloma/paloma-4.jpg.asset.json";
+import pal5 from "@/assets/paloma/paloma-5.jpg.asset.json";
+import pal6 from "@/assets/paloma/paloma-6.jpg.asset.json";
+// Estepona apartment renovation
+import est1 from "@/assets/estepona/estepona-1.jpg.asset.json";
+import est2 from "@/assets/estepona/estepona-2.jpg.asset.json";
+import est3 from "@/assets/estepona/estepona-3.jpg.asset.json";
+import est4 from "@/assets/estepona/estepona-4.jpg.asset.json";
+import est5 from "@/assets/estepona/estepona-5.jpg.asset.json";
+import est6 from "@/assets/estepona/estepona-6.jpg.asset.json";
+// La Roca de San Diego — for extra variety in the site gallery
+import lrLiving from "@/assets/projects/la-roca/living-room.jpg.asset.json";
+import lrPool from "@/assets/projects/la-roca/view-pool-villa-night.jpg.asset.json";
+import lrTerrace from "@/assets/projects/la-roca/terrace-palms-view.jpg.asset.json";
+import lrMaster from "@/assets/projects/la-roca/master-bed-view-terrace.jpg.asset.json";
 import beforeReno from "@/assets/renovation/before-renovation.png.asset.json";
 import costaMap from "@/assets/map/costa-del-sol-map.jpg.asset.json";
 
@@ -637,16 +656,31 @@ function Process() {
 
 type ProjectCat = "All" | "Villas" | "Renovations" | "Pools & Outdoor";
 const projects: { img: string; cat: Exclude<ProjectCat, "All">; title: string; loc: string }[] = [
+  { img: lrPool.url, cat: "Villas", title: "La Roca de San Diego", loc: "Sotogrande" },
+  { img: pal1.url, cat: "Villas", title: "La Paloma Villa", loc: "Manilva" },
+  { img: pal2.url, cat: "Villas", title: "La Paloma — Interior", loc: "Manilva" },
   { img: v66.url, cat: "Villas", title: "Contemporary Villa", loc: "Marbella" },
   { img: v51.url, cat: "Villas", title: "Villa 51", loc: "Marbella" },
+  { img: pal3.url, cat: "Villas", title: "La Paloma — Living", loc: "Manilva" },
   { img: v1.url, cat: "Villas", title: "Cliffside Residence", loc: "Marbella" },
-  { img: v133.url, cat: "Renovations", title: "Vertical Reform", loc: "Marbella" },
+  { img: lrMaster.url, cat: "Villas", title: "Master Suite — La Roca", loc: "Sotogrande" },
   { img: v65.url, cat: "Villas", title: "Detached Villa", loc: "Benalmádena" },
+  { img: pal4.url, cat: "Villas", title: "La Paloma — Detail", loc: "Manilva" },
+  { img: v88.url, cat: "Villas", title: "Villa Delivery", loc: "Marbella" },
+  { img: est1.url, cat: "Renovations", title: "Estepona Apartment", loc: "Estepona" },
+  { img: est2.url, cat: "Renovations", title: "Estepona Apt — Kitchen", loc: "Estepona" },
+  { img: est3.url, cat: "Renovations", title: "Estepona Apt — Living", loc: "Estepona" },
+  { img: v133.url, cat: "Renovations", title: "Vertical Reform", loc: "Marbella" },
+  { img: est4.url, cat: "Renovations", title: "Estepona Apt — Bath", loc: "Estepona" },
   { img: v27.url, cat: "Renovations", title: "Structural Works", loc: "Marbella" },
+  { img: est5.url, cat: "Renovations", title: "Estepona Apt — Detail", loc: "Estepona" },
   { img: v50.url, cat: "Renovations", title: "Interior Reform", loc: "Mijas" },
+  { img: est6.url, cat: "Renovations", title: "Estepona Apt — Bedroom", loc: "Estepona" },
+  { img: lrTerrace.url, cat: "Pools & Outdoor", title: "Terrace & Palms — La Roca", loc: "Sotogrande" },
   { img: v59.url, cat: "Pools & Outdoor", title: "Terrace & Pool", loc: "Estepona" },
   { img: v2.url, cat: "Pools & Outdoor", title: "Facade & Pool", loc: "Estepona" },
-  { img: v88.url, cat: "Villas", title: "Villa Delivery", loc: "Marbella" },
+  { img: pal5.url, cat: "Pools & Outdoor", title: "La Paloma — Outdoor", loc: "Manilva" },
+  { img: pal6.url, cat: "Pools & Outdoor", title: "La Paloma — Terrace", loc: "Manilva" },
 ];
 
 function Projects() {
@@ -1028,7 +1062,7 @@ function ContactCTA() {
           </div>
 
           <dl className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-6 text-sm max-w-md">
-            <ContactRow icon={Mail} label="Email" value="info@rktopcraft.com" />
+            <ContactRow icon={Mail} label="Email" value="rktopcraft@gmail.com" />
             <ContactRow icon={MapPin} label="Coverage" value="Sotogrande · Marbella · Estepona · Mijas · Benalmádena" />
             <ContactRow icon={Languages} label="Languages" value="English · Spanish · German · Russian" />
             <ContactRow icon={ShieldCheck} label="Licence" value="B75276881" />
@@ -1136,7 +1170,7 @@ function Footer() {
           <ul className="mt-4 space-y-2 text-sm text-ivory/80">
             <li><a href={`tel:+34${PHONE.replace(/\s/g, "")}`} className="hover:text-clay-soft transition">{PHONE}</a></li>
             <li><a href={WA_LINK} target="_blank" rel="noreferrer" className="hover:text-clay-soft transition">WhatsApp</a></li>
-            <li><a href="mailto:info@rktopcraft.com" className="hover:text-clay-soft transition">info@rktopcraft.com</a></li>
+            <li><a href="mailto:rktopcraft@gmail.com" className="hover:text-clay-soft transition">rktopcraft@gmail.com</a></li>
           </ul>
         </div>
       </div>
