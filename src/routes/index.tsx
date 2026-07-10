@@ -29,11 +29,13 @@ export const Route = createFileRoute("/")({
 const PHONE = "699 757 950";
 const WA_LINK = "https://wa.me/34699757950?text=Hello%20RK%20Topcraft%2C%20I%27d%20like%20to%20discuss%20a%20project.";
 
-const NAV = [
+type NavItem = { id: string; label: string; to?: string };
+const NAV: NavItem[] = [
   { id: "top", label: "Home" },
   { id: "services", label: "Services" },
   { id: "process", label: "Process" },
-  { id: "projects", label: "Projects" },
+  { id: "projects", label: "Gallery" },
+  { id: "current-projects", label: "Current Projects", to: "/projects" },
   { id: "ronda", label: "Ronda" },
   { id: "areas", label: "Areas" },
   { id: "voices", label: "Voices" },
