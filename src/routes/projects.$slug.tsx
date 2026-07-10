@@ -190,13 +190,53 @@ function Fact({ k, v }: { k: string; v: string }) {
   );
 }
 
+function LazyImg({
+  src,
+  alt,
+  className = "",
+  sizes,
+  eager = false,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+  sizes?: string;
+  eager?: boolean;
+  priority?: boolean;
+}) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <img
+      src={src}
+      alt={alt}
+      sizes={sizes}
+      loading={eager ? "eager" : "lazy"}
+      decoding="async"
+      // @ts-expect-error - fetchpriority is a valid HTML attr, not yet in React types on all versions
+      fetchpriority={priority ? "high" : "auto"}
+      onLoad={() => setLoaded(true)}
+      className={`${className} transition-[opacity,filter,transform] duration-500 ease-out ${
+        loaded ? "opacity-100 blur-0" : "opacity-0 blur-md scale-[1.02]"
+      }`}
+    />
+  );
+}
+
 function Gallery({
   images,
 }: {
   images: { src: string | null; label: string }[];
 }) {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [entering, setEntering] = useState(false);
   const total = images.length;
+
+  const open = (i: number) => {
+    setLightbox(i);
+    setEntering(true);
+    requestAnimationFrame(() => setEntering(false));
+  };
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -215,6 +255,22 @@ function Gallery({
     };
   }, [lightbox, total]);
 
+  // Prefetch neighbors of active lightbox image for instant next/prev
+  useEffect(() => {
+    if (lightbox === null) return;
+    const neighbors = [
+      images[(lightbox + 1) % total],
+      images[(lightbox - 1 + total) % total],
+    ];
+    neighbors.forEach((n) => {
+      if (n?.src) {
+        const img = new Image();
+        img.decoding = "async";
+        img.src = n.src;
+      }
+    });
+  }, [lightbox, images, total]);
+
   return (
     <div>
       {/* Masonry grid — all photos labelled */}
@@ -222,16 +278,16 @@ function Gallery({
         {images.map((img, i) => (
           <figure
             key={i}
-            onClick={() => setLightbox(i)}
+            onClick={() => open(i)}
             className="group relative mb-4 block break-inside-avoid overflow-hidden bg-secondary cursor-pointer"
           >
             {img.src ? (
-              <img
+              <LazyImg
                 src={img.src}
                 alt={img.label}
-                loading="lazy"
-                decoding="async"
-                className="block w-full h-auto object-cover transition duration-[900ms] group-hover:scale-[1.05]"
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                eager={i < 3}
+                className="block w-full h-auto object-cover group-hover:scale-[1.05]"
               />
             ) : (
               <div className="aspect-[4/3]">
@@ -262,16 +318,16 @@ function Gallery({
               <button
                 key={idx}
                 type="button"
-                onClick={() => setLightbox(idx)}
+                onClick={() => open(idx)}
                 aria-label={`Open ${img.label}`}
                 title={img.label}
                 className="group relative aspect-square overflow-hidden bg-secondary opacity-80 hover:opacity-100 hover:ring-2 hover:ring-clay transition"
               >
                 {img.src ? (
-                  <img
+                  <LazyImg
                     src={img.src}
                     alt={img.label}
-                    loading="lazy"
+                    sizes="120px"
                     className="h-full w-full object-cover"
                   />
                 ) : (
@@ -290,8 +346,13 @@ function Gallery({
       {/* Lightbox */}
       {lightbox !== null && images[lightbox] && (
         <div
-          className="fixed inset-0 z-[100] bg-teal-deep/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-10"
+          className={`fixed inset-0 z-[100] bg-teal-deep/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-10 transition-opacity duration-300 ${
+            entering ? "opacity-0" : "opacity-100"
+          }`}
           onClick={() => setLightbox(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={images[lightbox].label}
         >
           <button
             aria-label="Close"
@@ -321,13 +382,18 @@ function Gallery({
             <ChevronRight className="h-8 w-8" />
           </button>
           <figure
-            className="max-w-6xl max-h-full flex flex-col items-center"
+            className={`max-w-6xl max-h-full flex flex-col items-center transition-all duration-300 ease-out ${
+              entering ? "opacity-0 scale-95" : "opacity-100 scale-100"
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             {images[lightbox].src ? (
-              <img
+              <LazyImg
+                key={images[lightbox].src}
                 src={images[lightbox].src!}
                 alt={images[lightbox].label}
+                eager
+                priority
                 className="max-h-[80vh] w-auto object-contain"
               />
             ) : (
