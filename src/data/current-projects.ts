@@ -69,18 +69,10 @@ import paloma27 from "@/assets/projects/la-paloma/paloma-27.jpg.asset.json";
 import paloma28 from "@/assets/projects/la-paloma/paloma-28.jpg.asset.json";
 import paloma29 from "@/assets/projects/la-paloma/paloma-29.jpg.asset.json";
 import paloma30 from "@/assets/projects/la-paloma/paloma-30.jpg.asset.json";
-import paloma31 from "@/assets/projects/la-paloma/paloma-31.jpg.asset.json";
 import paloma32 from "@/assets/projects/la-paloma/paloma-32.jpg.asset.json";
 import paloma33 from "@/assets/projects/la-paloma/paloma-33.jpg.asset.json";
-import paloma34 from "@/assets/projects/la-paloma/paloma-34.jpg.asset.json";
-import paloma35 from "@/assets/projects/la-paloma/paloma-35.jpg.asset.json";
 import paloma36 from "@/assets/projects/la-paloma/paloma-36.jpg.asset.json";
-import paloma37 from "@/assets/projects/la-paloma/paloma-37.jpg.asset.json";
-import paloma38 from "@/assets/projects/la-paloma/paloma-38.jpg.asset.json";
-import paloma39 from "@/assets/projects/la-paloma/paloma-39.jpg.asset.json";
 import paloma40 from "@/assets/projects/la-paloma/paloma-40.jpg.asset.json";
-import paloma41 from "@/assets/projects/la-paloma/paloma-41.jpg.asset.json";
-import paloma42 from "@/assets/projects/la-paloma/paloma-42.jpg.asset.json";
 import paloma43 from "@/assets/projects/la-paloma/paloma-43.jpg.asset.json";
 
 export type ProjectStatus =
@@ -226,18 +218,10 @@ export const PROJECTS: CurrentProject[] = [
       { src: paloma28.url, label: "La Paloma — exterior view 28" },
       { src: paloma29.url, label: "La Paloma — exterior view 29" },
       { src: paloma30.url, label: "La Paloma — exterior view 30" },
-      { src: paloma31.url, label: "La Paloma — exterior view 31" },
       { src: paloma32.url, label: "La Paloma — exterior view 32" },
       { src: paloma33.url, label: "La Paloma — exterior view 33" },
-      { src: paloma34.url, label: "La Paloma — exterior view 34" },
-      { src: paloma35.url, label: "La Paloma — exterior view 35" },
       { src: paloma36.url, label: "La Paloma — exterior view 36" },
-      { src: paloma37.url, label: "La Paloma — exterior view 37" },
-      { src: paloma38.url, label: "La Paloma — exterior view 38" },
-      { src: paloma39.url, label: "La Paloma — exterior view 39" },
       { src: paloma40.url, label: "La Paloma — exterior view 40" },
-      { src: paloma41.url, label: "La Paloma — exterior view 41" },
-      { src: paloma42.url, label: "La Paloma — exterior view 42" },
       { src: paloma43.url, label: "La Paloma — exterior view 43" },
     ],
   },
