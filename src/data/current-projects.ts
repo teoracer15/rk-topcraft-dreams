@@ -174,18 +174,18 @@ export const PROJECTS: CurrentProject[] = [
     type: "Residential development — 10-house project",
     status: "In Progress",
     summary:
-      "A ten-home residential development on the Costa del Sol, conceived as a private enclave of contemporary Mediterranean villas for discerning international buyers.",
+      "A Swiss-backed investment: ten contemporary sea-view villas in Urb. La Paloma, Manilva — between Estepona and Sotogrande on the Costa del Sol.",
     description:
-      "La Paloma is a ten-house residential development taking shape on the Costa del Sol. The scheme brings together contemporary Mediterranean architecture, generous indoor–outdoor living and a curated palette of natural materials — designed for buyers seeking a refined coastal residence with the ease of a new-build.",
+      "La Paloma 10 is an exclusive Swiss investment development of ten luxury villas for sale on the Costa del Sol, ideally set between Estepona and Sotogrande in the sought-after Urb. La Paloma de Manilva. Contemporary architecture, double-height ceilings, open-plan living and full-height glazing frame panoramic sea views, while the location places top golf courses, marinas, international schools and beaches just minutes away.",
     longDescription:
-      "Currently under construction and supervised end-to-end by the RK Topcraft team, La Paloma balances architectural rigour with the relaxed rhythm of Costa del Sol living. Each of the ten homes is planned around light, privacy and framed views, with the same standard of craftsmanship applied across structure, finishes and outdoor spaces. (Full specifications, floor plans and pricing to be published — placeholder copy.)",
+      "Each of the ten villas is fully customisable — 3 to 6 bedrooms, 3 to 6 bathrooms, plots of approximately 800–867 m² and built areas from 400 to 700 m², with an optional basement of up to 200 m². Set in a consolidated, low-traffic neighbourhood, the development combines privacy, security and Mediterranean lifestyle in equal measure. Prices start from €1,400,000 and range up to €1,800,000 depending on plot size, quality of sea views and the built area tailored to each client. The showhouse on plot 138 is currently under construction and will be ready by the end of 2026. Once built, these villas will appreciate in value and further customisation will no longer be possible — a rare opportunity in modern Costa del Sol real estate. Construction is supervised end-to-end by the RK Topcraft team.",
     facts: {
-      location: "Costa del Sol, Spain",
-      plotSize: "TBC — placeholder",
-      buildSize: "TBC — placeholder",
-      bedrooms: "TBC — placeholder",
-      bathrooms: "TBC — placeholder",
-      status: "In Progress",
+      location: "Urb. La Paloma, Manilva — Málaga, Spain",
+      plotSize: "800–867 m² (approx.)",
+      buildSize: "400–700 m² built · optional basement up to 200 m²",
+      bedrooms: "3–6 (customisable)",
+      bathrooms: "3–6 (customisable)",
+      status: "In Progress · from €1,400,000",
     },
     gallery: [
       { src: paloma21.url, label: "La Paloma — exterior view 01" },
