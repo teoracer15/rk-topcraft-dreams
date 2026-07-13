@@ -38,6 +38,51 @@ import garage from "@/assets/projects/la-roca/garage.jpg.asset.json";
 import extra1 from "@/assets/projects/la-roca/extra-1.jpg.asset.json";
 import extra2 from "@/assets/projects/la-roca/extra-2.jpg.asset.json";
 
+// La Paloma — photos from Google Drive
+import paloma01 from "@/assets/projects/la-paloma/paloma-01.jpg.asset.json";
+import paloma02 from "@/assets/projects/la-paloma/paloma-02.jpg.asset.json";
+import paloma03 from "@/assets/projects/la-paloma/paloma-03.jpg.asset.json";
+import paloma04 from "@/assets/projects/la-paloma/paloma-04.jpg.asset.json";
+import paloma05 from "@/assets/projects/la-paloma/paloma-05.jpg.asset.json";
+import paloma06 from "@/assets/projects/la-paloma/paloma-06.jpg.asset.json";
+import paloma07 from "@/assets/projects/la-paloma/paloma-07.jpg.asset.json";
+import paloma08 from "@/assets/projects/la-paloma/paloma-08.jpg.asset.json";
+import paloma09 from "@/assets/projects/la-paloma/paloma-09.jpg.asset.json";
+import paloma10 from "@/assets/projects/la-paloma/paloma-10.jpg.asset.json";
+import paloma11 from "@/assets/projects/la-paloma/paloma-11.jpg.asset.json";
+import paloma12 from "@/assets/projects/la-paloma/paloma-12.jpg.asset.json";
+import paloma13 from "@/assets/projects/la-paloma/paloma-13.jpg.asset.json";
+import paloma14 from "@/assets/projects/la-paloma/paloma-14.jpg.asset.json";
+import paloma15 from "@/assets/projects/la-paloma/paloma-15.jpg.asset.json";
+import paloma16 from "@/assets/projects/la-paloma/paloma-16.jpg.asset.json";
+import paloma17 from "@/assets/projects/la-paloma/paloma-17.jpg.asset.json";
+import paloma18 from "@/assets/projects/la-paloma/paloma-18.jpg.asset.json";
+import paloma19 from "@/assets/projects/la-paloma/paloma-19.jpg.asset.json";
+import paloma20 from "@/assets/projects/la-paloma/paloma-20.jpg.asset.json";
+import paloma21 from "@/assets/projects/la-paloma/paloma-21.jpg.asset.json";
+import paloma22 from "@/assets/projects/la-paloma/paloma-22.jpg.asset.json";
+import paloma23 from "@/assets/projects/la-paloma/paloma-23.jpg.asset.json";
+import paloma24 from "@/assets/projects/la-paloma/paloma-24.jpg.asset.json";
+import paloma25 from "@/assets/projects/la-paloma/paloma-25.jpg.asset.json";
+import paloma26 from "@/assets/projects/la-paloma/paloma-26.jpg.asset.json";
+import paloma27 from "@/assets/projects/la-paloma/paloma-27.jpg.asset.json";
+import paloma28 from "@/assets/projects/la-paloma/paloma-28.jpg.asset.json";
+import paloma29 from "@/assets/projects/la-paloma/paloma-29.jpg.asset.json";
+import paloma30 from "@/assets/projects/la-paloma/paloma-30.jpg.asset.json";
+import paloma31 from "@/assets/projects/la-paloma/paloma-31.jpg.asset.json";
+import paloma32 from "@/assets/projects/la-paloma/paloma-32.jpg.asset.json";
+import paloma33 from "@/assets/projects/la-paloma/paloma-33.jpg.asset.json";
+import paloma34 from "@/assets/projects/la-paloma/paloma-34.jpg.asset.json";
+import paloma35 from "@/assets/projects/la-paloma/paloma-35.jpg.asset.json";
+import paloma36 from "@/assets/projects/la-paloma/paloma-36.jpg.asset.json";
+import paloma37 from "@/assets/projects/la-paloma/paloma-37.jpg.asset.json";
+import paloma38 from "@/assets/projects/la-paloma/paloma-38.jpg.asset.json";
+import paloma39 from "@/assets/projects/la-paloma/paloma-39.jpg.asset.json";
+import paloma40 from "@/assets/projects/la-paloma/paloma-40.jpg.asset.json";
+import paloma41 from "@/assets/projects/la-paloma/paloma-41.jpg.asset.json";
+import paloma42 from "@/assets/projects/la-paloma/paloma-42.jpg.asset.json";
+import paloma43 from "@/assets/projects/la-paloma/paloma-43.jpg.asset.json";
+
 export type ProjectStatus =
   | "In Progress"
   | "Nearing Completion"
