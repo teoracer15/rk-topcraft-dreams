@@ -40,6 +40,7 @@ import lrTerrace from "@/assets/projects/la-roca/terrace-palms-view.jpg.asset.js
 import lrMaster from "@/assets/projects/la-roca/master-bed-view-terrace.jpg.asset.json";
 import beforeReno from "@/assets/renovation/before-renovation.png.asset.json";
 import costaMap from "@/assets/map/costa-del-sol-map.jpg.asset.json";
+import { PROJECTS as CURRENT_PROJECTS } from "@/data/current-projects";
 
 export const Route = createFileRoute("/")({
   component: Home,
