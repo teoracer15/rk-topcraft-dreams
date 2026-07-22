@@ -115,6 +115,7 @@ function Home() {
         <Services />
         <WhyStats />
         <Process />
+        <CurrentProjectsTeaser />
         <Projects />
         <RondaTeaser />
         <BeforeAfter />
