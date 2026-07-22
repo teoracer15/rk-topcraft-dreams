@@ -40,6 +40,7 @@ import lrTerrace from "@/assets/projects/la-roca/terrace-palms-view.jpg.asset.js
 import lrMaster from "@/assets/projects/la-roca/master-bed-view-terrace.jpg.asset.json";
 import beforeReno from "@/assets/renovation/before-renovation.png.asset.json";
 import costaMap from "@/assets/map/costa-del-sol-map.jpg.asset.json";
+import { PROJECTS as CURRENT_PROJECTS } from "@/data/current-projects";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -114,6 +115,7 @@ function Home() {
         <Services />
         <WhyStats />
         <Process />
+        <CurrentProjectsTeaser />
         <Projects />
         <RondaTeaser />
         <BeforeAfter />
@@ -648,6 +650,78 @@ function Process() {
       </ol>
 
       <div className="h-24" />
+    </section>
+  );
+}
+
+/* ---------- Current Projects — teaser linking to /projects ---------- */
+
+function CurrentProjectsTeaser() {
+  return (
+    <section id="current-projects" className="bg-background py-24 md:py-32 scroll-mt-24">
+      <div className="mx-auto max-w-7xl px-6 md:px-10">
+        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between reveal">
+          <div>
+            <p className="eyebrow text-clay">Current Projects</p>
+            <h2 className="mt-4 font-serif text-5xl leading-tight md:text-6xl">
+              On site <em>right now.</em>
+            </h2>
+            <p className="mt-6 max-w-xl font-serif-alt text-lg text-ink/70">
+              A live look at the villas and developments RK Topcraft is currently
+              building along the Costa del Sol.
+            </p>
+          </div>
+          <Link
+            to="/projects"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.24em] text-ink border-b border-ink pb-1 hover:text-clay hover:border-clay transition self-start"
+          >
+            View all current projects <ArrowUpRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        <div className="mt-12 grid gap-8 md:grid-cols-2 reveal">
+          {CURRENT_PROJECTS.map((project) => {
+            const cover = project.gallery.find((g) => g.src)?.src ?? null;
+            return (
+              <Link
+                key={project.slug}
+                to="/projects/$slug"
+                params={{ slug: project.slug }}
+                className="group relative block overflow-hidden bg-muted"
+              >
+                {cover && (
+                  <img
+                    src={cover}
+                    alt={project.name}
+                    loading="lazy"
+                    className="block h-[420px] w-full object-cover transition duration-[900ms] group-hover:scale-[1.05]"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-teal-deep/95 via-teal-deep/30 to-transparent" />
+                <div className="absolute top-5 left-5">
+                  <span className="inline-flex items-center bg-clay/95 px-3 py-1 text-[0.6rem] uppercase tracking-[0.24em] text-ivory">
+                    {project.status}
+                  </span>
+                </div>
+                <div className="absolute inset-x-0 bottom-0 p-6 md:p-8">
+                  <p className="text-[0.62rem] uppercase tracking-[0.28em] text-clay-soft">
+                    {project.location}
+                  </p>
+                  <h3 className="mt-2 font-serif text-3xl text-ivory md:text-4xl">
+                    {project.name}
+                  </h3>
+                  <p className="mt-3 max-w-md font-serif-alt text-base text-ivory/85">
+                    {project.summary}
+                  </p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-[0.65rem] uppercase tracking-[0.24em] text-ivory border-b border-ivory/60 pb-1 group-hover:text-clay-soft group-hover:border-clay-soft transition">
+                    View project <ArrowUpRight className="h-3.5 w-3.5" />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
     </section>
   );
 }
